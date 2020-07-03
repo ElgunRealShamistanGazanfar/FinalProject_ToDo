@@ -1,8 +1,11 @@
 package app.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * Tasks will be created here
@@ -21,16 +24,18 @@ public class Task {
     private String title;
 
     @Column(name = "tsk_deadline")
-    private String deadline;
+    private Date deadline;
 
     @Column(name = "tsk_curr")
-    private String curr;
+    private LocalDate curr;
 
     @Column(name = "tsk_content")
     private String content;
 
     @Column(name = "tsk_complement_status")
     private String complement_status;
+
+
 
     @ManyToOne
     @JoinTable(name = "tsk_user",
@@ -44,4 +49,16 @@ public class Task {
             ) }
     )
     private MyUser my_user;
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", deadline='" + deadline + '\'' +
+                ", curr='" + curr + '\'' +
+                ", content='" + content + '\'' +
+                ", complement_status='" + complement_status + '\'' +
+                '}';
+    }
 }

@@ -46,7 +46,8 @@
 						<option class="tasks-filter-item" value="done">Done</option>
 					</select>
                 </form>
-                <a href="add-task.html" class="btn btn-dark btn-add-task">Add task</a>
+
+                <a href="/create-task" class="btn btn-dark btn-add-task">Add task</a>
             </div>
         </div>
 
@@ -60,52 +61,9 @@
 					<img class="task-icons-item" src="img/bell.png" alt="bell">
 					<img class="task-icons-item" src="/img/trash-bin.png" alt="bell">
 				</div>
-				<a href="#" class="task-btn"th:text="${task.getComplement_status()}"></a>
+				<a href="/create-task" class="task-btn"th:text="${task.getComplement_status()}"></a>
 			</div>
-<!--			<div class="task">-->
-<!--				<h4 class="task-title">Task 002</h4>-->
-<!--				<p class="task-start-time">21.06.2020</p>-->
-<!--				<p class="task-deadline">Deadline to: <span class="task-deadline-date">30.06.2020</span></p>-->
-<!--				<p class="task-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim</p>-->
-<!--				<div class="task-icons">-->
-<!--					<img class="task-icons-item" src="./img/bell.png" alt="bell">-->
-<!--					<img class="task-icons-item" src="./img/trash-bin.png" alt="bell">-->
-<!--				</div>-->
-<!--				<a href="#" class="task-btn">Complete</a>-->
-<!--			</div>-->
-<!--			<div class="task">-->
-<!--				<h4 class="task-title">Task 003</h4>-->
-<!--				<p class="task-start-time">21.06.2020</p>-->
-<!--				<p class="task-deadline">Deadline to: <span class="task-deadline-date">30.06.2020</span></p>-->
-<!--				<p class="task-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim</p>-->
-<!--				<div class="task-icons">-->
-<!--					<img class="task-icons-item" src="./img/bell.png" alt="bell">-->
-<!--					<img class="task-icons-item" src="./img/trash-bin.png" alt="bell">-->
-<!--				</div>-->
-<!--				<a href="#" class="task-btn">Complete</a>-->
-<!--			</div>-->
-<!--			<div class="task">-->
-<!--				<h4 class="task-title">Task 004</h4>-->
-<!--				<p class="task-start-time">21.06.2020</p>-->
-<!--				<p class="task-deadline">Deadline to: <span class="task-deadline-date">30.06.2020</span></p>-->
-<!--				<p class="task-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim</p>-->
-<!--				<div class="task-icons">-->
-<!--					<img class="task-icons-item" src="./img/bell.png" alt="bell">-->
-<!--					<img class="task-icons-item" src="./img/trash-bin.png" alt="bell">-->
-<!--				</div>-->
-<!--				<a href="#" class="task-btn">Complete</a>-->
-<!--       		</div>-->
-<!--			<div class="task">-->
-<!--				<h4 class="task-title">Task 005</h4>-->
-<!--				<p class="task-start-time">21.06.2020</p>-->
-<!--				<p class="task-deadline">Deadline to: <span class="task-deadline-date">30.06.2020</span></p>-->
-<!--				<p class="task-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim</p>-->
-<!--				<div class="task-icons">-->
-<!--					<img class="task-icons-item" src="./img/bell.png" alt="bell">-->
-<!--					<img class="task-icons-item" src="./img/trash-bin.png" alt="bell">-->
-<!--				</div>-->
-<!--				<a href="#" class="task-btn">Complete</a>-->
-<!--       		</div>-->
+
         </div>
 
    		<div class="task-card-section">

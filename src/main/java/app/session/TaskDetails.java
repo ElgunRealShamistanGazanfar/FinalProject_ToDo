@@ -1,6 +1,7 @@
 package app.session;
 
 
+import app.entity.MyUser;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -12,11 +13,6 @@ public class TaskDetails {
 
     private String title;
 
-    private String deadline;
-
-    private String curr;
-
     private String content;
 
-    private String complement_status;
 }
