@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
-    <title>Tasks dashboard</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>Tasks dashboard</title>
+
+
 </head>
+
 <body>
 <header class="main-header">
 	<a href="./tasks-dashboard.html" class="main-header-logo"><img src="/img/iba-tech-logo-white.svg" alt="IBA Tech Academy"></a>
@@ -20,7 +25,7 @@
 				<span class="main-header-profile-welcome">Welcome,</span>
 				<span class="main-header-username">Sample User</span>
 			</div>
-			<img class="main-header-user-icon" src="../static/img/user-icon-with-background.svg" alt="User Icon">
+			<img class="main-header-user-icon" src="/img/user-icon-with-background.svg" alt="User Icon">
 			<div class="hidden-accordion-wrapper">
 				<ul class="hidden-accordion">
 					<li class="hidden-accordion-item"><a href="./tasks-archive.html" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="../static/img/archive-icon.svg" alt="User Icon">Archive</a></li>
@@ -53,15 +58,15 @@
 
         <div class="tasks-list" >
 			<div class="task" th:each="task : ${tasks}">
-				<h4 class="task-title" th:text="${task.getTitle()}"></h4>
+				<h4 class="task-title" id="title" th:text="${task.getTitle()}"></h4>
 				<p class="task-start-time" th:text="${task.getCurr()}"></p>
 				<p class="task-deadline">Deadline to: <span class="task-deadline-date" th:text="${task.getDeadline()}"></span></p>
-				<p class="task-description" th:text="${task.getContent()}"></p>
+				<p class="task-description" id="desc" th:text="${task.getContent()}"></p>
 				<div class="task-icons">
-					<img class="task-icons-item" src="img/bell.png" alt="bell">
+					<img class="task-icons-item" src="/img/bell.png" alt="bell">
 					<img class="task-icons-item" src="/img/trash-bin.png" alt="bell">
 				</div>
-				<a href="/create-task" class="task-btn"th:text="${task.getComplement_status()}"></a>
+				<a href="/tasks-dashboard" onclick="callIt()"  class="task-btn"th:text="${task.getComplement_status()}"></a>
 			</div>
 
         </div>

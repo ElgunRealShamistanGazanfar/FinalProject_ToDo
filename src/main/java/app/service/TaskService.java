@@ -3,6 +3,7 @@ package app.service;
 
 import app.entity.Task;
 import app.repo.TaskRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 @Service
 public class TaskService {
 
+    @Autowired
     private final TaskRepo taskRepo;
 
     public TaskService(TaskRepo taskRepo) {

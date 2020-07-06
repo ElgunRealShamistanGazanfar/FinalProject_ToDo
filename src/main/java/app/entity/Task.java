@@ -10,6 +10,7 @@ import java.time.LocalDate;
 /**
  * Tasks will be created here
  */
+
 @Data
 @Entity
 public class Task {
@@ -26,6 +27,10 @@ public class Task {
     @Column(name = "tsk_deadline")
     private Date deadline;
 
+    @Column(name = "image")
+    @Lob
+    private byte [] image;
+
     @Column(name = "tsk_curr")
     private LocalDate curr;
 
@@ -34,7 +39,6 @@ public class Task {
 
     @Column(name = "tsk_complement_status")
     private String complement_status;
-
 
 
     @ManyToOne
@@ -49,6 +53,19 @@ public class Task {
             ) }
     )
     private MyUser my_user;
+
+    public Task(){
+
+    }
+    public Task(String title, Date deadline, byte [] image, LocalDate curr, String content, String complement_status) {
+        this.title = title;
+        this.deadline = deadline;
+        this.image = image;
+        this.curr = curr;
+        this.content = content;
+        this.complement_status = complement_status;
+    }
+
 
     @Override
     public String toString() {

@@ -6,10 +6,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
     <title>Add new Task</title>
+
+
 </head>
 <body>
 <header class="main-header">
-	<a href="./tasks-dashboard.html" class="main-header-logo"><img src="/img/iba-tech-logo-white.svg" alt="IBA Tech Academy"></a>
+	<a href="" class="main-header-logo"><img src="/img/iba-tech-logo-white.svg" alt="IBA Tech Academy"></a>
 	<div class="main-header-wrapper">
 		<label class="main-header-search-wrapper">
 			<input type="search" class="main-header-search" placeholder="Search">
@@ -42,9 +44,14 @@
         	</div>
         	
         	<div class="task-card">
-				<form class="task-card-right-col" method="post">
+				<form class="task-card-right-col" method="post" enctype="multipart/form-data">
    				<div class="task-card-left-col">
-   					<div class="task-card-img _2"></div>
+					<div class="task-card-img _2" >
+
+					</div>
+						<input type="file" name="myImage" >
+
+
    					<div class="task-card-form">
 						<div class="task-card-form-row">
 							<label for="task-card-date" class="task-card-label">Deadline to:</label>
