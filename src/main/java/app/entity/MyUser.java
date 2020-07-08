@@ -1,13 +1,16 @@
 package app.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
 @Entity
 public class MyUser {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +26,18 @@ public class MyUser {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "roles")
+    private String roles;
+
+
+
+
     @OneToMany(mappedBy = "my_user")
     private Set<Task> tasks;
+
+    public MyUser() {
+    }
+
 
 
 }

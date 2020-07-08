@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +27,7 @@
     <div class="container">
         <div class="start-content-row">
             <div class="start-content-welcome-img-b">
-                <img src="/img/start-page-promo.png" class="start-content-welcome-img" alt="#">
+                <img src="img/start-page-promo.png" class="start-content-welcome-img" alt="#">
             </div>
             <div class="start-content-welcome-text-b">
                 <h1 class="welcome-title">Welcome back!</h1>
@@ -38,14 +38,14 @@
 
 
                 
-                    <form action="#" class="login-form" id="login-form">
+                <form class="login-form" id="login-form"  th:action="@{/login}" method="post">
     <div class="text-input-container @@complete">
     <span class="text-input-icon">
         <span>
             <img src="/img/icons/email.png" alt="">
         </span>        
     </span>
-    <input type="email" class="form-control @@complete" placeholder="Email address" value="">
+    <input type="email" class="form-control @@complete" name="email" placeholder="Email address" value="">
     
 
         
@@ -55,7 +55,7 @@
             <img src="/img/icons/password.png" alt="">
         </span>        
     </span>
-    <input type="password" class="form-control @@complete" placeholder="Password" value="">
+    <input type="password" class="form-control @@complete" name="password" placeholder="Password" value="">
     
 
         

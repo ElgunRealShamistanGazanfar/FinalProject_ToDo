@@ -3,7 +3,6 @@ package app.controller;
 
 import app.entity.Task;
 import app.service.TaskService;
-import app.session.TaskDetails;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +18,6 @@ import java.util.Collection;
 @Log4j2
 @Controller
 @RequestMapping("/")
-@SessionAttributes(
-        names = { TaskDetails.ATTR },
-        types = { TaskDetails.class }
-)
 public class TaskController {
 
     private static String pf(String fmt, Object... a) {
