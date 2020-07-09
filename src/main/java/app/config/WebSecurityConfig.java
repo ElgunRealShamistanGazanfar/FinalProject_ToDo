@@ -24,8 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login").permitAll()
-//                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -35,45 +34,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
 
-
-
-        http.csrf().disable();
-
-        http.headers().frameOptions().sameOrigin();
-
     }
 
-//
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("email")
-//                        .password("password")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
-
-    @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .withDefaultSchema()
-                .withUser(User.withUsername("jamal")
-                        .password(passwordEncoder().encode("lamaj"))
-                        .roles("USER"));
-    }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    @Override
+    public UserDetailsService userDetailsService() {
+        UserDetails user =
+                User.withDefaultPasswordEncoder()
+                        .username("user")
+                        .password("password")
+                        .roles("USER")
+                        .build();
+
+        return new InMemoryUserDetailsManager(user);
     }
+
+//    @Autowired
+//    private DataSource dataSource;
+//
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth)
+//            throws Exception {
+//        auth.jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .withDefaultSchema()
+//                .withUser(User.withUsername("jamal")
+//                        .password(passwordEncoder().encode("lamaj"))
+//                        .roles("USER"));
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 }

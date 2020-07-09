@@ -5,6 +5,8 @@ spring:
   main:
     banner-mode: off
 
+
+
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres

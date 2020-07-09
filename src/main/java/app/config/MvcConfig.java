@@ -1,5 +1,4 @@
 package app.config;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
@@ -22,8 +21,8 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("login");
-//        registry.addViewController("/index").setViewName("index");
+//        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/login").setViewName("login");
 //        registry.addViewController("/login").setViewName("login");
     }
 }

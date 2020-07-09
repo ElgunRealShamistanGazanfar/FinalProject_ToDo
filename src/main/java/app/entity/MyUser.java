@@ -39,5 +39,6 @@ public class MyUser {
     }
 
 
-
+    public MyUser(String jim, String encode) {
+    }
 }

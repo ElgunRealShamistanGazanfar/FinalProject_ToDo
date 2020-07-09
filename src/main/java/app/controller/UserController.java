@@ -15,10 +15,10 @@ import java.util.Collection;
 @RequestMapping("/")
 public class UserController {
 
-    @GetMapping("login")
-    public String handle_get1() {
-
-        log.info("GET -> login");
-        return "login";
-    }
+//    @GetMapping("login")
+//    public String handle_get1() {
+//
+//        log.info("GET -> login");
+//        return "login";
+//    }
 }
