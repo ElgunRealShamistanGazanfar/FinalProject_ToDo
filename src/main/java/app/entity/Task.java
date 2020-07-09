@@ -1,6 +1,5 @@
 package app.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -52,7 +51,7 @@ public class Task {
                     referencedColumnName = "usr_id"
             ) }
     )
-    private MyUser my_user;
+    private Users users;
 
     public Task(){
 

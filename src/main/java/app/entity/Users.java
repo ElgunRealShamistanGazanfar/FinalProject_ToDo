@@ -9,7 +9,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @Entity
-public class MyUser {
+public class Users {
 
 
     @Id
@@ -20,8 +20,14 @@ public class MyUser {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "email")
     private String email;
+
+    @Column(name = "enabled")
+    private Boolean enabled;
 
     @Column(name = "password")
     private String password;
@@ -32,13 +38,13 @@ public class MyUser {
 
 
 
-    @OneToMany(mappedBy = "my_user")
+    @OneToMany(mappedBy = "users")
     private Set<Task> tasks;
 
-    public MyUser() {
+    public Users() {
     }
 
 
-    public MyUser(String jim, String encode) {
+    public Users(String jim, String encode) {
     }
 }
