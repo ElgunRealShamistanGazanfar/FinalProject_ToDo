@@ -41,7 +41,7 @@
                 <form class="login-form" id="login-form"  th:action="@{/login}" method="post">
 
                     <div th:if="${param.error}" class="alert alert-error">
-                        Invalid username and password.
+                        <p style="color: red">Invalid username and password.</p>
                     </div>
 
 

@@ -44,6 +44,13 @@ public class TaskController {
         return "tasks-dashboard";
     }
 
+    @PostMapping("tasks-dashboard")
+    public String handle_post1() {
+        log.info("POST -> /tasks-dashboards");
+        return "tasks-dashboard";
+    }
+
+
     @GetMapping("create-task")
     public String handle_goAdd_Task_get() {
         log.info("GET -> /go_add_task");
