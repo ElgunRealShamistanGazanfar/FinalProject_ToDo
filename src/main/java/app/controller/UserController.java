@@ -25,17 +25,9 @@ public class UserController {
         this.myUserRepo = myUserRepo;
     }
 
-    @GetMapping("login")
-    public String handle_get1() {
-        log.info("GET -> /login");
-        return "login";
-    }
-
-    @PostMapping("login")
-    public String handle_post1(HttpServletRequest request) {
-        log.info("Post -> /login");
-
-      Arrays.stream(request.getCookies()).forEach(e->log.info("melumat: "+ e.getName()+" : "+e.getValue()));
+    @RequestMapping("login")
+    public String handle_get222() {
+        log.info("requestMapping -> /login");
         return "login";
     }
 
@@ -74,7 +66,7 @@ public class UserController {
         RegisterService rs = new RegisterService(myUserRepo);
 
         log.info("POST -> /sign-up");
-        if (password.equals(repassword) || !rs.hasUsed(email)){
+        if (password.equals(repassword) && !rs.hasUsed(email)){
 
             Users new_user = new Users();
             new_user.setFullName(full_name);
@@ -82,7 +74,7 @@ public class UserController {
             new_user.setPassword(password);
             new_user.setRoles("USER");
             myUserRepo.save(new_user);
-            request.setAttribute("JSESSIOID", new_user);
+            request.setAttribute("JSESSIONID", new_user);
             return "sign-up";
         }
         return "error_repas";

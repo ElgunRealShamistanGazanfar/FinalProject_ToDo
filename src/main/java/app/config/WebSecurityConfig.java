@@ -15,68 +15,96 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import javax.sql.DataSource;
-import java.util.Arrays;
-
 @Log4j2
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+//    public WebSecurityConfig(MvcConfig mvcConfig) {
+//        this.mvcConfig = mvcConfig;
+//    }
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/login1","/sign-up").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login1")
+//                .successForwardUrl("/landing")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll();
+//
+//
+//
+//
+//        http.csrf().disable();
+//
+//
+//    }
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login","/sign-up").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .successForwardUrl("/landing")
                 .permitAll()
+                .successForwardUrl("/landing")
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+        .oauth2Login()
+
+        ;
 
 
 
-        http.csrf().disable().formLogin().disable();
-
+        http.headers().frameOptions().sameOrigin();
 
     }
 
-
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("password")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
-
-    @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "select username,password, enabled from users where username=?")
-                .authoritiesByUsernameQuery(
-                        "select username, authority from users where username=?").withUser(User.withUsername("jamal").password("jamal").roles("USER"));
-    }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    @Override
+    public UserDetailsService userDetailsService() {
+        UserDetails user =
+                User.withDefaultPasswordEncoder()
+                        .username("user")
+                        .password("password")
+                        .roles("USER")
+                        .build();
 
-}
+        return new InMemoryUserDetailsManager(user);
+    }}
+
+//
+//    private final MvcConfig mvcConfig;
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth)
+//            throws Exception {
+//        auth.jdbcAuthentication()
+//                .dataSource(mvcConfig.dataSource())
+//                .usersByUsernameQuery(
+//                        "select username,password, enabled from users where username=?")
+//                .authoritiesByUsernameQuery(
+//                        "select username, authority from users where username=?")
+//                .withUser(User.withUsername("jamal").password("jamal").roles("USER"));
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//}
 
