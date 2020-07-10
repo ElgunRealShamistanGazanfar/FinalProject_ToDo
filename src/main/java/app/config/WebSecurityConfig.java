@@ -4,6 +4,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,60 +19,61 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Log4j2
 @Configuration
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    public WebSecurityConfig(MvcConfig mvcConfig) {
 //        this.mvcConfig = mvcConfig;
 //    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/login1","/sign-up").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login1")
-//                .successForwardUrl("/landing")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//
-//
-//
-//
-//        http.csrf().disable();
-//
-//
-//    }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/login","/sign-up").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll()
                 .successForwardUrl("/landing")
+                .permitAll()
                 .and()
                 .logout()
-                .permitAll()
-                .and()
-        .oauth2Login()
-
-        ;
+                .permitAll();
 
 
 
-        http.headers().frameOptions().sameOrigin();
+
+        http.csrf().disable();
+
 
     }
+
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+//                .successForwardUrl("/landing")
+//                .and()
+//                .logout()
+//                .permitAll()
+//                .and()
+//        .oauth2Login()
+//
+//        ;
+//
+//
+//
+//        http.headers().frameOptions().sameOrigin();
+//
+//    }
 
 
     @Bean

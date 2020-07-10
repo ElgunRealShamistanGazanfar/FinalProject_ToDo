@@ -103,6 +103,20 @@
             </div>
         </div>
     </div>
+        <div class="unauthenticated">
+            <a class="btn" href="/login">Login</a>
+        </div>
+        <div class="authenticated" style="display: none">
+            Logged in as: <span id="user"></span>
+            <div><button onClick="logout()" class="btn">Logout</button></div>
+        </div>
 </main> 
 </body>
+<script type="text/javascript">
+    $.get("/user", function(data) {
+        $("#user").html(data.name);
+        $(".unauthenticated").hide()
+        $(".authenticated").show()
+    });
+</script>
 </html>
