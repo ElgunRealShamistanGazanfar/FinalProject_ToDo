@@ -6,6 +6,7 @@ import app.repo.MyUserRepo;
 import app.service.RegisterService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,16 +27,8 @@ public class UserController {
     }
 
     @GetMapping("login")
-    public String handle_get1() {
-        log.info("GET -> /login");
-        return "login";
-    }
-
-    @PostMapping("login")
-    public String handle_post1(HttpServletRequest request) {
-        log.info("Post -> /login");
-
-      Arrays.stream(request.getCookies()).forEach(e->log.info("melumat: "+ e.getName()+" : "+e.getValue()));
+    public String handle_get222() {
+        log.info("getMapping -> /login");
         return "login";
     }
 
@@ -44,6 +37,19 @@ public class UserController {
     public String handle_get2() {
         log.info("GET -> /landing");
         return "landing";
+    }
+    @GetMapping("forgot")
+    public String handle_get_forgot() {
+        log.info("GET -> /forgot");
+        return "forgot";
+    }
+    @PostMapping("forgot")
+    public String handle_post_forgot(@RequestParam("full_name_f")String fullname,@RequestParam("email_f")String email
+    , Model model) {
+        RegisterService rs = new RegisterService(myUserRepo);
+        log.info("Post -> /forgot");
+        model.addAttribute("user", rs.giveMeUser(fullname, email).get());
+        return rs.isCorrect(fullname, email)? "backUp": "login";
     }
 
     @PostMapping("landing")
@@ -74,15 +80,16 @@ public class UserController {
         RegisterService rs = new RegisterService(myUserRepo);
 
         log.info("POST -> /sign-up");
-        if (password.equals(repassword) || !rs.hasUsed(email)){
+        if (password.equals(repassword) && !rs.hasUsed(email)){
 
             Users new_user = new Users();
             new_user.setFullName(full_name);
             new_user.setEmail(email);
+            new_user.setUsername(email);
             new_user.setPassword(password);
             new_user.setRoles("USER");
             myUserRepo.save(new_user);
-            request.setAttribute("JSESSIOID", new_user);
+            request.setAttribute("JSESSIONID", new_user);
             return "sign-up";
         }
         return "error_repas";
