@@ -4,6 +4,7 @@ package app.controller;
 import app.entity.Task;
 import app.service.TaskService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Log4j2
@@ -39,7 +42,7 @@ public class TaskController {
     ) {
         Collection<Task> tasks=taskService.fetchAll();
         model.addAttribute("tasks", tasks);
-
+        Object credentials = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         log.info("GET -> /tasks-dashboards");
         return "tasks-dashboard";
     }

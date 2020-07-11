@@ -38,12 +38,12 @@ public class UserController {
         log.info("GET -> /landing");
         return "landing";
     }
-    @GetMapping("forgot")
+    @GetMapping("reset-password")
     public String handle_get_forgot() {
-        log.info("GET -> /forgot");
-        return "forgot";
+        log.info("GET -> /reset-password");
+        return "reset-password";
     }
-    @PostMapping("forgot")
+    @PostMapping("reset-password")
     public String handle_post_forgot(@RequestParam("full_name_f")String fullname,@RequestParam("email_f")String email
     , Model model) {
         RegisterService rs = new RegisterService(myUserRepo);
@@ -75,7 +75,8 @@ public class UserController {
                                 @RequestParam("email")String email,
                                @RequestParam("password")String password,
                                @RequestParam("repassword")String repassword,
-                               HttpServletRequest request
+                               HttpServletRequest request,
+                               Model model
                                ) {
         RegisterService rs = new RegisterService(myUserRepo);
 
@@ -89,6 +90,7 @@ public class UserController {
             new_user.setPassword(password);
             new_user.setRoles("USER");
             myUserRepo.save(new_user);
+            model.addAttribute("suc_reg","You have successfully registered");
             request.setAttribute("JSESSIONID", new_user);
             return "sign-up";
         }
