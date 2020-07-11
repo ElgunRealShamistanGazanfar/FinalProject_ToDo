@@ -26,9 +26,9 @@ public class UserController {
         this.myUserRepo = myUserRepo;
     }
 
-    @RequestMapping("login")
+    @GetMapping("login")
     public String handle_get222() {
-        log.info("requestMapping -> /login");
+        log.info("getMapping -> /login");
         return "login";
     }
 
@@ -85,6 +85,7 @@ public class UserController {
             Users new_user = new Users();
             new_user.setFullName(full_name);
             new_user.setEmail(email);
+            new_user.setUsername(email);
             new_user.setPassword(password);
             new_user.setRoles("USER");
             myUserRepo.save(new_user);
