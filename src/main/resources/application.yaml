@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    banner-mode: off
+
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            clientId: 637974700259597
+            clientSecret: 1229f0f12ea8fdf246b7a7e73ca56265
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: sh7513244
+  #    initialization-mode: always
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+
