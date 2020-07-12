@@ -5,6 +5,8 @@ import app.entity.Users;
 import app.repo.MyUserRepo;
 import app.service.RegisterService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,7 @@ public class UserController {
         this.myUserRepo = myUserRepo;
     }
 
+
     @GetMapping("login")
     public String handle_get222() {
         log.info("getMapping -> /login");
@@ -34,7 +37,10 @@ public class UserController {
 
 
     @GetMapping("landing")
-    public String handle_get2() {
+    public String handle_get2(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        model.addAttribute("username", username);
         log.info("GET -> /landing");
         return "landing";
     }
@@ -54,14 +60,10 @@ public class UserController {
 
     @PostMapping("landing")
     public String handle_post2() {
+
+
         log.info("Post -> /landing");
         return "landing";
-    }
-
-    @GetMapping("tasks-archive")
-    public String handle_get3() {
-        log.info("GET -> /tasks-archive");
-        return "tasks-archive";
     }
 
     @GetMapping("sign-up")
@@ -89,6 +91,7 @@ public class UserController {
             new_user.setUsername(email);
             new_user.setPassword(password);
             new_user.setRoles("USER");
+            new_user.setDeleted(false);
             myUserRepo.save(new_user);
             model.addAttribute("suc_reg","You have successfully registered");
             request.setAttribute("JSESSIONID", new_user);

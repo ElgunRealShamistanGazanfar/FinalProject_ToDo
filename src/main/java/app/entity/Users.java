@@ -26,8 +26,8 @@ public class Users {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "enabled")
-    private Boolean enabled;
+    @Column(name = "deleted")
+    private Boolean deleted;
 
     @Column(name = "password")
     private String password;

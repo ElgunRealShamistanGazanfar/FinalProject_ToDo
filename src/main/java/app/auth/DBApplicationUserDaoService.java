@@ -14,14 +14,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
-@Repository("fake")
-public class FakeApplicationUserDaoService implements ApplicationUserDao {
+@Repository("db")
+public class DBApplicationUserDaoService implements ApplicationUserDao {
 
     private final MyUserRepo myUserRepo;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public FakeApplicationUserDaoService(MyUserRepo myUserRepo, PasswordEncoder passwordEncoder) {
+    public DBApplicationUserDaoService(MyUserRepo myUserRepo, PasswordEncoder passwordEncoder) {
         this.myUserRepo = myUserRepo;
         this.passwordEncoder = passwordEncoder;
     }
