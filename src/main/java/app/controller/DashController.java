@@ -5,6 +5,7 @@ import app.entity.Task;
 import app.service.TaskService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +35,12 @@ public class DashController {
     }
 
     @GetMapping("/add/{id}")
-    public RedirectView add_important(@PathVariable int id){
+    public RedirectView add_important(@PathVariable int id, Model model){
         taskService.addToimportant(id);
         log.info(String.format("Element with id %d added to importants", id));
+        List<Task> chosen = new ArrayList<>();
+        chosen.add(taskService.findTaskById(id).get());
+        model.addAttribute("tsks", chosen);
         return new RedirectView("/tasks-dashboard");
 
     }

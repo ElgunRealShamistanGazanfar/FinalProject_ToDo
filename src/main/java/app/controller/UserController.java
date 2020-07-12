@@ -1,8 +1,10 @@
 package app.controller;
 
 
+import app.entity.Task;
 import app.entity.Users;
 import app.repo.MyUserRepo;
+import app.repo.TaskRepo;
 import app.service.RegisterService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -23,9 +25,11 @@ import java.util.Arrays;
 public class UserController {
 
     private final MyUserRepo myUserRepo;
+    private final TaskRepo taskRepo;
 
-    public UserController(MyUserRepo myUserRepo) {
+    public UserController(MyUserRepo myUserRepo, TaskRepo taskRepo) {
         this.myUserRepo = myUserRepo;
+        this.taskRepo = taskRepo;
     }
 
 
@@ -40,7 +44,11 @@ public class UserController {
     public String handle_get2(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails) principal).getUsername();
+        List<Task> all = taskRepo.findAll();
+        Task random_task = taskRepo.findAll().get((int) (Math.random() * all.size()));
         model.addAttribute("username", username);
+        model.addAttribute("title", random_task.getTitle());
+        model.addAttribute("content", random_task.getContent());
         log.info("GET -> /landing");
         return "landing";
     }
@@ -85,13 +93,7 @@ public class UserController {
         log.info("POST -> /sign-up");
         if (password.equals(repassword) && !rs.hasUsed(email)){
 
-            Users new_user = new Users();
-            new_user.setFullName(full_name);
-            new_user.setEmail(email);
-            new_user.setUsername(email);
-            new_user.setPassword(password);
-            new_user.setRoles("USER");
-            new_user.setDeleted(false);
+            Users new_user = new Users(full_name,email,email,password,"USER");
             myUserRepo.save(new_user);
             model.addAttribute("suc_reg","You have successfully registered");
             request.setAttribute("JSESSIONID", new_user);
