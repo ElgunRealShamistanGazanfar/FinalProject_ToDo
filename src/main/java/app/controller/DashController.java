@@ -16,7 +16,7 @@ import java.util.List;
 
 @Log4j2
 @Controller
-@RequestMapping("/delete")
+@RequestMapping("/")
 public class DashController {
 
     private final TaskService taskService;
@@ -25,9 +25,18 @@ public class DashController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/delete/{id}")
     public RedirectView delete_task(@PathVariable int id){
+        log.info(String.format("GET -> deleting task with id: %d", id));
         taskService.deleteTask(id);
+        return new RedirectView("/tasks-dashboard");
+
+    }
+
+    @GetMapping("/add/{id}")
+    public RedirectView add_important(@PathVariable int id){
+        taskService.addToimportant(id);
+        log.info(String.format("Element with id %d added to importants", id));
         return new RedirectView("/tasks-dashboard");
 
     }

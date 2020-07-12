@@ -75,6 +75,11 @@ public class TaskController {
                 model.addAttribute("tasks",taskService.fetchAll());
                 model.addAttribute("username", username);
                 break;
+
+             case "important":
+                 model.addAttribute("tasks",taskService.important());
+                 model.addAttribute("username", username);
+                  break;
         }
 
 

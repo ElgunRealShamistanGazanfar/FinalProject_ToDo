@@ -56,6 +56,7 @@
 						<option class="tasks-filter-item" value="available">Sort tasks</option>
 						<option class="tasks-filter-item" value="overdue">Overdue</option>
 						<option class="tasks-filter-item" value="today">Today</option>
+						<option class="tasks-filter-item" value="important">Important</option>
 						<option class="tasks-filter-item" value="done">Done</option>
 					</select>
 				<input type="submit" value="ok" class="btn btn-sm btn-outline-primary ">
@@ -72,7 +73,7 @@
 				<p class="task-deadline">Deadline to: <span class="task-deadline-date" th:text="${task.getDeadline()}"></span></p>
 				<p class="task-description" id="desc" th:text="${task.getContent()}"></p>
 				<div class="task-icons">
-					<img class="task-icons-item" src="/img/bell.png" alt="bell">
+					<a th:href="@{'/add/'+ ${task.getId()}}"><img class="task-icons-item" src="/img/bell.png" alt="bell"></a>
 					<a th:href="@{'/delete/'+ ${task.getId()}}"><img class="task-icons-item" src="/img/trash-bin.png" alt="bell"></a>
 				</div>
 				<p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status()}"></p>
