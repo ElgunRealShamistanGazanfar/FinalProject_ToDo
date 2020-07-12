@@ -60,5 +60,9 @@ public class TaskService {
         return fetchAll().stream().filter(e -> e.getDeadline().equals(java.sql.Date.valueOf(LocalDate.now()))).collect(Collectors.toList());
     }
 
+    public void deleteTask(int id){
+        taskRepo.deleteById(id);
+    }
+
 
 }

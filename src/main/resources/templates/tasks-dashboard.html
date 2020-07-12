@@ -8,6 +8,15 @@
 	<title>Tasks dashboard</title>
 
 
+	<script>
+
+		function callIt(myId) {
+			document.getElementById(myId).innerHTML = "complete";
+		}
+
+
+	</script>
+
 </head>
 
 <body>
@@ -49,7 +58,7 @@
 						<option class="tasks-filter-item" value="today">Today</option>
 						<option class="tasks-filter-item" value="done">Done</option>
 					</select>
-				<input type="submit" value="ok" class="btn btn-outline-primary btn-sm">
+				<input type="submit" value="ok" class="btn btn-sm btn-outline-primary ">
                 </form>
 
                 <a href="/create-task" class="btn btn-dark btn-add-task">Add task</a>
@@ -64,9 +73,9 @@
 				<p class="task-description" id="desc" th:text="${task.getContent()}"></p>
 				<div class="task-icons">
 					<img class="task-icons-item" src="/img/bell.png" alt="bell">
-					<img class="task-icons-item" src="/img/trash-bin.png" alt="bell">
+					<a th:href="@{'/delete/'+ ${task.getId()}}"><img class="task-icons-item" src="/img/trash-bin.png" alt="bell"></a>
 				</div>
-				<a href="/tasks-dashboard" onclick="callIt()"  class="task-btn"th:text="${task.getComplement_status()}"></a>
+				<p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status()}"></p>
 			</div>
 
 
