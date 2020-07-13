@@ -121,4 +121,13 @@ public class TaskService {
 
     }
 
+    public void updateTitleAndDate(int id, java.sql.Date edited_date, String edited_title) {
+
+        Optional<Task> taskById = findTaskById(id);
+        taskRepo.deleteById(id);
+        Task tsk  = taskById.get();
+        tsk.setTitle(edited_title);
+        tsk.setDeadline(edited_date);
+        taskRepo.save(tsk);
+    }
 }

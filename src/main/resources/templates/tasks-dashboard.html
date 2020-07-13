@@ -84,7 +84,8 @@
 				<p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status() ? 'complete' : 'incomplete'}"></p>
 			</div>
         </div>
-<div>
+
+	<form action="/edit" method="post">
    		<div class="task-card-section" th:each="tsk : ${shown}" id="desc">
    			<h3 class="task-card-title" th:text="${tsk.getTitle()}"></h3>
    			<div class="task-card">
@@ -94,10 +95,12 @@
 							 width="364" height="246">
 
 					</div>
+
    					<div class="task-card-form">
 						<div class="task-card-form-row">
 							<label for="task-card-date" class="task-card-label">Deadline to:</label>
 							<input name="task-card-date" type="date" th:text="${tsk.getDeadline()}" class="task-card-input">
+							<input type="text" name="unvisible_id" style="display: none" th:value="${tsk.getId()}">
 						</div>
 						<div class="task-card-form-row">
 							<label for="name-task" class="task-card-label">Name Task</label>
@@ -123,10 +126,19 @@
    					<h4 class="task-card-header">Task Description</h4>
    					<p class="task-card-text" th:text="${tsk.getContent()}">
    					</p>
-  					<a href="#" class="btn btn-dark btn-task-card">Save</a>
+  					<input type="submit" class="btn btn-dark btn-task-card" value="Save">
    				</div>
    			</div>
    		</div>
+
+
+
+
+
+
+</form>
+
+
 </div>
    
     </div>

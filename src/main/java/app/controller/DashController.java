@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +68,18 @@ public class DashController {
                 IOUtils.copy(is, response.getOutputStream());
             }
         }
+    }
+
+    @PostMapping("/edit")
+    public RedirectView edit_post(@RequestParam("name-task")String edited_title,
+                                  @RequestParam("task-card-date") Date edited_date,
+                                  @RequestParam("unvisible_id")int id
+                                  ){
+        taskService.updateTitleAndDate(id, edited_date, edited_title);
+
+        log.info(String.format("Edited id %d, title %s ", id, edited_title));
+        return new RedirectView("/tasks-dashboard");
+
     }
 
 
