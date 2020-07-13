@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>To-Do: Landing</title>
+</head>
+<body>
+<header class="main-header">
+    <a href="/tasks-dashboard" class="main-header-logo"><img src="/img/iba-tech-logo-white.svg" alt="IBA Tech Academy"></a>
+    <div class="main-header-wrapper">
+        <label class="main-header-search-wrapper">
+            <input type="search" class="main-header-search" placeholder="Search">
+            <img src="/img/search-icon.svg" alt="Search Icon">
+        </label>
+        <div class="main-header-profile-wrapper">
+            <div class="main-header-profile-credentials">
+                <span class="main-header-profile-welcome">Welcome,</span>
+                <span class="main-header-username" th:text="${username}"></span>
+            </div>
+            <img class="main-header-user-icon" src="/img/user-icon-with-background.svg" alt="User Icon">
+            <div class="hidden-accordion-wrapper">
+                <ul class="hidden-accordion">
+                    <li class="hidden-accordion-item"><a href="/tasks-archive" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/archive-icon.svg" alt="User Icon">Archive</a></li>
+                    <li class="hidden-accordion-item"><a href="/tasks-dashboard" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/favourite-icon.svg" alt="Favourite Icon">My tasks</a></li>
+                    <li class="hidden-accordion-item"><a href="/logout" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/log-out-icon.svg" alt="Log Out Icon">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+    <main class="start-content">
+    <div>
+        <div class="start-content-row aic">
+            <div class="start-content-welcome-img-b">
+                <img src="/img/landing-background.svg" class="start-content-welcome-img" alt="#">
+            </div>
+            <div class="start-content-welcome-text-b text-right">
+                <h1 class="welcome-title" th:text="${title}">Lorem</h1>
+<p class="welcome-text" th:text="${content}"></p>
+<a href="/tasks-dashboard" class="btn btn-dark">Get Started</a>
+
+
+
+
+
+
+        </div>
+    </div>
+</main>
+</body>
+</html>
