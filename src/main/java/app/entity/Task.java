@@ -59,13 +59,14 @@ public class Task {
     public Task(){
 
     }
-    public Task(String title, Date deadline,  LocalDate curr,String status, String content, Boolean complement_status) {
+    public Task(String title, Date deadline,  LocalDate curr,String status, String content, Boolean complement_status, Users users) {
         this.title = title;
         this.deadline = deadline;
         this.curr = curr;
         this.content = content;
         this.status = status;
         this.complement_status = complement_status;
+        this.users = users;
     }
     public Task(Boolean complement_status){
         this.complement_status = complement_status;

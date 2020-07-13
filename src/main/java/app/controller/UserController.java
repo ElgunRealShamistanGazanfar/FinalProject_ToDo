@@ -42,10 +42,17 @@ public class UserController {
 
     @GetMapping("landing")
     public String handle_get2(Model model) {
+        Task random_task = new Task();
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails) principal).getUsername();
         List<Task> all = taskRepo.findAll();
-        Task random_task = taskRepo.findAll().get((int) (Math.random() * all.size()));
+        if (!all.isEmpty()){
+          random_task = taskRepo.findAll().get((int) (Math.random() * all.size()));
+        }else {
+            random_task.setContent("GO Dashboard to add new tasks");
+            random_task.setTitle("No Task");
+        }
+
         model.addAttribute("username", username);
         model.addAttribute("title", random_task.getTitle());
         model.addAttribute("content", random_task.getContent());

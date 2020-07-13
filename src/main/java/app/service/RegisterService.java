@@ -2,14 +2,19 @@ package app.service;
 
 import app.entity.Users;
 import app.repo.MyUserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class RegisterService {
 
-
+    @Autowired
     private final MyUserRepo myUserRepo;
 
     public RegisterService(MyUserRepo myUserRepo) {
@@ -33,4 +38,15 @@ public class RegisterService {
         Optional<Users> allByFullNameAndEmail = myUserRepo.getAllByFullNameAndEmail(fullname, email);
         return allByFullNameAndEmail;
     }
+
+    public Optional<Users> logged_user(){
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+
+        return myUserRepo.findByUsername(username);
+    }
+
+
+
 }

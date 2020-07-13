@@ -13,6 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface TaskRepo extends JpaRepository<Task, Integer> {
-
+            
 
 }

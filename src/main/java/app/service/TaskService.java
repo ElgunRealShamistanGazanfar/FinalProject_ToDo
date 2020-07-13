@@ -2,7 +2,6 @@ package app.service;
 
 
 import app.entity.Task;
-import app.exception.TaskNotFoundEx;
 import app.repo.TaskRepo;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -29,12 +28,15 @@ public class TaskService {
     @Autowired
     private final TaskRepo taskRepo;
 
-    public TaskService(TaskRepo taskRepo) {
+    private final RegisterService registerService;
+
+    public TaskService(TaskRepo taskRepo, RegisterService registerService) {
         this.taskRepo = taskRepo;
+        this.registerService = registerService;
     }
 
-    public Collection<Task> fetchAll() {
-        return taskRepo.findAll();
+    public Collection<Task> fetchAll(int loggedUser_id) {
+        return taskRepo.findAll().stream().filter(t->t.getUsers().getId()==loggedUser_id).collect(Collectors.toList());
     }
 
     public Optional<Task> findTaskById(int id) {
@@ -57,17 +59,17 @@ public class TaskService {
         return curr_date.compareTo(deadline) > 0;
     }
 
-    public List<Task> done() {
-        return fetchAll().stream().filter(e -> isDone(e.getId())).collect(Collectors.toList());
+    public List<Task> done(int userId) {
+        return fetchAll(userId).stream().filter(e -> isDone(e.getId())).collect(Collectors.toList());
     }
 
-    public List<Task> overdue() {
-        return fetchAll().stream().filter(e -> isOverdue(LocalDate.now(), e.getDeadline())).collect(Collectors.toList());
+    public List<Task> overdue(int userId) {
+        return fetchAll(userId).stream().filter(e -> isOverdue(LocalDate.now(), e.getDeadline())).collect(Collectors.toList());
 
     }
 
-    public List<Task> today() {
-        return fetchAll().stream().filter(e -> e.getDeadline().equals(java.sql.Date.valueOf(LocalDate.now()))).collect(Collectors.toList());
+    public List<Task> today(int userId) {
+        return fetchAll(userId).stream().filter(e -> e.getDeadline().equals(java.sql.Date.valueOf(LocalDate.now()))).collect(Collectors.toList());
     }
 
     public void deleteTask(int id) {
@@ -83,8 +85,8 @@ public class TaskService {
 
     }
 
-    public List<Task> important() {
-        List<Task> imp = taskRepo.findAll().stream().filter(t -> t.getStatus().equals("important")).collect(Collectors.toList());
+    public List<Task> important(int userId) {
+        List<Task> imp = fetchAll(userId).stream().filter(t -> t.getStatus().equals("important")).collect(Collectors.toList());
         if (imp.isEmpty()){
             imp.add(0,new Task(false));
         }
@@ -104,6 +106,7 @@ public class TaskService {
     // Save image to a DB
     @SneakyThrows
     public void addImageAndSaveToDB(Task task, MultipartFile imageFile) {
+
         try {
             byte [] byteObj = new byte[imageFile.getBytes().length];
             int i = 0;
