@@ -3,6 +3,7 @@ package app.config;
 import app.auth.ApplicationUserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -26,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/css/*", "/sign-up" ,"/js/*").permitAll()
+                .antMatchers("/css/*","/img/**", "/sign-up","/ls" ,"/js/*","/reset-password").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

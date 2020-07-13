@@ -8,11 +8,25 @@
 	<title>Tasks dashboard</title>
 
 
+	<script>
+
+		function callIt(myId) {
+			document.getElementById(myId).innerHTML = "complete";
+		}
+
+		function chosen_div(task_id) {
+			document.getElementById("sent_id").value = task_id;
+
+		}
+
+
+	</script>
+
 </head>
 
 <body>
 <header class="main-header">
-	<a href="./tasks-dashboard.html" class="main-header-logo"><img src="/img/iba-tech-logo-white.svg" alt="IBA Tech Academy"></a>
+	<a href="/tasks-dashboard" class="main-header-logo"><img src="/img/iba-tech-logo-white.svg" alt="IBA Tech Academy"></a>
 	<div class="main-header-wrapper">
 		<label class="main-header-search-wrapper">
 			<input type="search" class="main-header-search" placeholder="Search">
@@ -21,14 +35,14 @@
 		<div class="main-header-profile-wrapper">
 			<div class="main-header-profile-credentials">
 				<span class="main-header-profile-welcome">Welcome,</span>
-				<span class="main-header-username">Sample User</span>
+				<span class="main-header-username" th:text="${username}" ></span>
 			</div>
 			<img class="main-header-user-icon" src="/img/user-icon-with-background.svg" alt="User Icon">
 			<div class="hidden-accordion-wrapper">
 				<ul class="hidden-accordion">
-					<li class="hidden-accordion-item"><a href="./tasks-archive.html" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="../static/img/archive-icon.svg" alt="User Icon">Archive</a></li>
-					<li class="hidden-accordion-item"><a href="./tasks-dashboard.html" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="../static/img/favourite-icon.svg" alt="Favourite Icon">My tasks</a></li>
-					<li class="hidden-accordion-item"><a href="./login.html" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="../static/img/log-out-icon.svg" alt="Log Out Icon">Log Out</a></li>
+					<li class="hidden-accordion-item"><a href="/tasks-archive" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/archive-icon.svg" alt="User Icon">Archive</a></li>
+					<li class="hidden-accordion-item"><a href="/tasks-dashboard" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/favourite-icon.svg" alt="Favourite Icon">My tasks</a></li>
+					<li class="hidden-accordion-item"><a href="/login" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/log-out-icon.svg" alt="Log Out Icon">Log Out</a></li>
 				</ul>
 			</div>
 		</div>
@@ -40,14 +54,17 @@
         <div class="tasks-caption">
             <h2 class="tasks-caption-title">Dashboard</h2>
             <div class="tasks-caption-actions">
-                <form class="tasks-filter" action="" id="sort-tasks">
+                <form class="tasks-filter" id="sort-tasks" action="/tasks-dashboard" method="post">
 					<label for="task-type" class="tasks-filter-label">Sort by</label>
 					<select class="tasks-filter-list" name="task-type" id="">
-						<option class="tasks-filter-item" value="deleted">Deleted</option>
+<!--						<option class="tasks-filter-item" value="deleted">Deleted</option>-->
+						<option class="tasks-filter-item" value="available">Sort tasks</option>
 						<option class="tasks-filter-item" value="overdue">Overdue</option>
 						<option class="tasks-filter-item" value="today">Today</option>
+						<option class="tasks-filter-item" value="important">Important</option>
 						<option class="tasks-filter-item" value="done">Done</option>
 					</select>
+				<input type="submit" value="ok" class="btn btn-sm btn-outline-primary ">
                 </form>
 
                 <a href="/create-task" class="btn btn-dark btn-add-task">Add task</a>
@@ -55,33 +72,39 @@
         </div>
 
         <div class="tasks-list" >
-			<div class="task" th:each="task : ${tasks}">
+			<div class="task" th:each="task : ${tasks}" th:onclick="|chosen_div('${task.getId()}')|">
 				<h4 class="task-title" id="title" th:text="${task.getTitle()}"></h4>
 				<p class="task-start-time" th:text="${task.getCurr()}"></p>
 				<p class="task-deadline">Deadline to: <span class="task-deadline-date" th:text="${task.getDeadline()}"></span></p>
 				<p class="task-description" id="desc" th:text="${task.getContent()}"></p>
 				<div class="task-icons">
-					<img class="task-icons-item" src="/img/bell.png" alt="bell">
-					<img class="task-icons-item" src="/img/trash-bin.png" alt="bell">
+					<a th:href="@{'/add/'+ ${task.getId()}}"><img class="task-icons-item" src="/img/bell.png" alt="bell"></a>
+					<a th:href="@{'/delete/'+ ${task.getId()}}"><img class="task-icons-item" src="/img/trash-bin.png" alt="bell"></a>
 				</div>
-				<a href="/tasks-dashboard" onclick="callIt()"  class="task-btn"th:text="${task.getComplement_status()}"></a>
+				<p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status() ? 'complete' : 'incomplete'}"></p>
 			</div>
-
         </div>
 
-   		<div class="task-card-section">
-   			<h3 class="task-card-title">Task 002</h3>
+	<form action="/edit" method="post">
+   		<div class="task-card-section" th:each="tsk : ${shown}" id="desc">
+   			<h3 class="task-card-title" th:text="${tsk.getTitle()}"></h3>
    			<div class="task-card">
    				<div class="task-card-left-col">
-   					<div class="task-card-img _1"></div>
+   					<div class="task-card-img _1">
+						<img th:src="${tsk.getImage() != null} ? '/show/' + ${tsk.getId()} : '/img/noimage.png'"
+							 width="364" height="246">
+
+					</div>
+
    					<div class="task-card-form">
 						<div class="task-card-form-row">
 							<label for="task-card-date" class="task-card-label">Deadline to:</label>
-							<input name="task-card-date" type="date" value="2020-06-30" class="task-card-input">
+							<input name="task-card-date" type="date" th:text="${tsk.getDeadline()}" class="task-card-input">
+							<input type="text" name="unvisible_id" style="display: none" th:value="${tsk.getId()}">
 						</div>
 						<div class="task-card-form-row">
 							<label for="name-task" class="task-card-label">Name Task</label>
-							<input name="name-task" type="text" placeholder="Task 002" class="task-card-input">
+							<input name="name-task" type="text" th:placeholder="${tsk.getTitle()}" class="task-card-input">
 						</div>
    					</div>
    					<div class="task-card-actions">
@@ -89,11 +112,11 @@
    							<img src="/img/arrow.png" alt="" class="task-card-actions-icon">
    							Share
    						</a>
-   						<a href="#" class="task-card-actions-item">
+   						<a th:href="@{'/add/'+ ${tsk.getId()}}" class="task-card-actions-item">
    							<img src="/img/bell.png" alt="" class="task-card-actions-icon">
    							Add to important
    						</a>
-   						<a href="#" class="task-card-actions-item">
+   						<a th:href="@{'/delete/'+ ${tsk.getId()}}" class="task-card-actions-item">
    							<img src="/img/trash-bin.png" alt="" class="task-card-actions-icon">
    							Delete
    						</a>
@@ -101,14 +124,22 @@
    				</div>
    				<div class="task-card-right-col">
    					<h4 class="task-card-header">Task Description</h4>
-   					<p class="task-card-text">
-   						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					</p>
-  					<a href="#" class="btn btn-dark btn-task-card">Save</a>
+   					<p class="task-card-text" th:text="${tsk.getContent()}">
+   					</p>
+  					<input type="submit" class="btn btn-dark btn-task-card" value="Save">
    				</div>
    			</div>
    		</div>
+
+
+
+
+
+
+</form>
+
+
+</div>
    
     </div>
 </section>

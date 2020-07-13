@@ -26,9 +26,6 @@ public class Users {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "enabled")
-    private Boolean enabled;
-
     @Column(name = "password")
     private String password;
 
@@ -45,6 +42,20 @@ public class Users {
     }
 
 
-    public Users(String jim, String encode) {
+    public Users(String fullName, String username, String email, String password, String roles, Set<Task> tasks) {
+            this.fullName = fullName;
+            this.username = username;
+            this.email = email;
+            this.password = password;
+            this.roles = roles;
+            this.tasks=tasks;
+    }
+
+    public Users(String fullname, String username, String email, String password, String roles) {
+        this.fullName = fullname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 }

@@ -18,7 +18,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tsk_id")
-    private long id;
+    private int id;
 
     @Column(name = "tsk_title")
     private String title;
@@ -36,8 +36,11 @@ public class Task {
     @Column(name = "tsk_content")
     private String content;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "tsk_complement_status")
-    private String complement_status;
+    private Boolean complement_status;
 
 
     @ManyToOne
@@ -56,12 +59,16 @@ public class Task {
     public Task(){
 
     }
-    public Task(String title, Date deadline, byte [] image, LocalDate curr, String content, String complement_status) {
+    public Task(String title, Date deadline,  LocalDate curr,String status, String content, Boolean complement_status, Users users) {
         this.title = title;
         this.deadline = deadline;
-        this.image = image;
         this.curr = curr;
         this.content = content;
+        this.status = status;
+        this.complement_status = complement_status;
+        this.users = users;
+    }
+    public Task(Boolean complement_status){
         this.complement_status = complement_status;
     }
 
@@ -74,6 +81,7 @@ public class Task {
                 ", deadline='" + deadline + '\'' +
                 ", curr='" + curr + '\'' +
                 ", content='" + content + '\'' +
+                ", status='" + status + '\'' +
                 ", complement_status='" + complement_status + '\'' +
                 '}';
     }

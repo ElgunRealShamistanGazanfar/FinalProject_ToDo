@@ -14,6 +14,7 @@ spring:
             clientSecret: 1229f0f12ea8fdf246b7a7e73ca56265
 
 
+
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -23,7 +24,7 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
 

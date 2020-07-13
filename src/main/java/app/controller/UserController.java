@@ -1,10 +1,14 @@
 package app.controller;
 
 
+import app.entity.Task;
 import app.entity.Users;
 import app.repo.MyUserRepo;
+import app.repo.TaskRepo;
 import app.service.RegisterService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -21,10 +25,13 @@ import java.util.Arrays;
 public class UserController {
 
     private final MyUserRepo myUserRepo;
+    private final TaskRepo taskRepo;
 
-    public UserController(MyUserRepo myUserRepo) {
+    public UserController(MyUserRepo myUserRepo, TaskRepo taskRepo) {
         this.myUserRepo = myUserRepo;
+        this.taskRepo = taskRepo;
     }
+
 
     @GetMapping("login")
     public String handle_get222() {
@@ -32,18 +39,32 @@ public class UserController {
         return "login";
     }
 
-
+        //afteer login page it comes
     @GetMapping("landing")
-    public String handle_get2() {
+    public String handle_get2(Model model) {
+        Task random_task = new Task();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        List<Task> all = taskRepo.findAll();
+        if (!all.isEmpty()){
+          random_task = taskRepo.findAll().get((int) (Math.random() * all.size()));
+        }else {
+            random_task.setContent("GO Dashboard to add new tasks");
+            random_task.setTitle("No Task");
+        }
+
+        model.addAttribute("username", username);
+        model.addAttribute("title", random_task.getTitle());
+        model.addAttribute("content", random_task.getContent());
         log.info("GET -> /landing");
         return "landing";
     }
-    @GetMapping("forgot")
+    @GetMapping("reset-password")
     public String handle_get_forgot() {
-        log.info("GET -> /forgot");
-        return "forgot";
+        log.info("GET -> /reset-password");
+        return "reset-password";
     }
-    @PostMapping("forgot")
+    @PostMapping("reset-password")
     public String handle_post_forgot(@RequestParam("full_name_f")String fullname,@RequestParam("email_f")String email
     , Model model) {
         RegisterService rs = new RegisterService(myUserRepo);
@@ -54,14 +75,10 @@ public class UserController {
 
     @PostMapping("landing")
     public String handle_post2() {
+
+
         log.info("Post -> /landing");
         return "landing";
-    }
-
-    @GetMapping("tasks-archive")
-    public String handle_get3() {
-        log.info("GET -> /tasks-archive");
-        return "tasks-archive";
     }
 
     @GetMapping("sign-up")
@@ -75,20 +92,17 @@ public class UserController {
                                 @RequestParam("email")String email,
                                @RequestParam("password")String password,
                                @RequestParam("repassword")String repassword,
-                               HttpServletRequest request
+                               HttpServletRequest request,
+                               Model model
                                ) {
         RegisterService rs = new RegisterService(myUserRepo);
 
         log.info("POST -> /sign-up");
         if (password.equals(repassword) && !rs.hasUsed(email)){
 
-            Users new_user = new Users();
-            new_user.setFullName(full_name);
-            new_user.setEmail(email);
-            new_user.setUsername(email);
-            new_user.setPassword(password);
-            new_user.setRoles("USER");
+            Users new_user = new Users(full_name,email,email,password,"USER");
             myUserRepo.save(new_user);
+            model.addAttribute("suc_reg","You have successfully registered");
             request.setAttribute("JSESSIONID", new_user);
             return "sign-up";
         }

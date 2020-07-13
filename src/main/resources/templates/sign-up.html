@@ -38,11 +38,12 @@
 
 
 
-                <div th:if="${param.pass}" class="alert alert-error">
-                    <p style="color: red">Passsword and Repassword are not the same.</p>
-                </div>
+
                 
                     <form action="/sign-up" class="sign-up-form" id="sign-up-form" method="post">
+                        <div>
+                            <p style="color: green; font-size: 30px;" th:text="${suc_reg}">.</p>
+                        </div>
     <div class="text-input-container @@complete">
     <span class="text-input-icon">
         <span>
@@ -56,7 +57,7 @@
 </div><div class="text-input-container @@complete">
     <span class="text-input-icon">
         <span>
-            <img src="../static/img/icons/email.png" alt="">
+            <img src="/img/icons/email.png" alt="">
         </span>        
     </span>
     <input type="email" class="form-control @@complete" placeholder="Email address" name="email" value="">

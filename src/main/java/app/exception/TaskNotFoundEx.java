@@ -1,4 +1,4 @@
-package ex;
+package app.exception;
 
 public class TaskNotFoundEx extends RuntimeException {
 }
