@@ -32,7 +32,7 @@ public class DashController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("delete/{id}")
     public RedirectView delete_task(@PathVariable int id){
         log.info(String.format("GET -> deleting task with id: %d", id));
         taskService.deleteTask(id);
@@ -40,7 +40,7 @@ public class DashController {
 
     }
 
-    @GetMapping("/add/{id}")
+    @GetMapping("add/{id}")
     public RedirectView add_important(@PathVariable int id, Model model){
         taskService.addToimportant(id);
         log.info(String.format("Element with id %d added to importants", id));
@@ -48,7 +48,7 @@ public class DashController {
 
     }
 
-    @GetMapping("/show/{id}")
+    @GetMapping("show/{id}")
     public void showImageDB(@PathVariable("id") Integer taskId, HttpServletResponse response) throws IOException {
 
         Optional<Task> res = taskService.findTaskById(taskId);
@@ -70,7 +70,7 @@ public class DashController {
         }
     }
 
-    @PostMapping("/edit")
+    @PostMapping("edit")
     public RedirectView edit_post(@RequestParam("name-task")String edited_title,
                                   @RequestParam("task-card-date") Date edited_date,
                                   @RequestParam("unvisible_id")int id
