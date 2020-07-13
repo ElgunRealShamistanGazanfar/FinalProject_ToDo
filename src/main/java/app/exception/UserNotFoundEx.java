@@ -1,4 +1,4 @@
 package app.exception;
 
-public class UserNotFoundEx {
+public class UserNotFoundEx extends RuntimeException {
 }
