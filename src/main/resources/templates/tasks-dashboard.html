@@ -81,7 +81,7 @@
 					<a th:href="@{'/add/'+ ${task.getId()}}"><img class="task-icons-item" src="/img/bell.png" alt="bell"></a>
 					<a th:href="@{'/delete/'+ ${task.getId()}}"><img class="task-icons-item" src="/img/trash-bin.png" alt="bell"></a>
 				</div>
-				<p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status()}"></p>
+				<p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status() ? 'complete' : 'incomplete'}"></p>
 			</div>
         </div>
 <div>
@@ -89,7 +89,11 @@
    			<h3 class="task-card-title" th:text="${tsk.getTitle()}"></h3>
    			<div class="task-card">
    				<div class="task-card-left-col">
-   					<div class="task-card-img _1"></div>
+   					<div class="task-card-img _1">
+						<img th:src="${tsk.getImage() != null} ? '/show/' + ${tsk.getId()} : '/img/noimage.png'"
+							 width="364" height="246">
+
+					</div>
    					<div class="task-card-form">
 						<div class="task-card-form-row">
 							<label for="task-card-date" class="task-card-label">Deadline to:</label>

@@ -2,18 +2,23 @@ package app.controller;
 
 
 import app.entity.Task;
+import app.repo.TaskRepo;
 import app.service.TaskService;
 import lombok.extern.log4j.Log4j2;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @Controller
@@ -41,4 +46,29 @@ public class DashController {
         return new RedirectView("/tasks-dashboard");
 
     }
+
+    @GetMapping("/show/{id}")
+    public void showImageDB(@PathVariable("id") Integer taskId, HttpServletResponse response) throws IOException {
+
+        Optional<Task> res = taskService.findTaskById(taskId);
+
+        if (res.isPresent()) {
+            Task task = res.get();
+
+            if (task.getImage() != null) {
+                byte[] byteArray = new byte[task.getImage().length];
+
+                int i = 0;
+                for (Byte imgByte : task.getImage()) {
+                    byteArray[i++] = imgByte;
+                }
+                response.setContentType("image/jpeg");
+                InputStream is = new ByteArrayInputStream(byteArray);
+                IOUtils.copy(is, response.getOutputStream());
+            }
+        }
+    }
+
+
+
 }

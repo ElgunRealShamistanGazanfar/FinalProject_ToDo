@@ -61,6 +61,11 @@ public class TaskController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails) principal).getUsername();
 
+
+        List<Task> toBeShown = new ArrayList<>();
+        toBeShown.add(taskService.important().get(0));
+        model.addAttribute("shown", toBeShown);
+
           switch (tsk_status){
             case "overdue":
                 model.addAttribute("tasks",taskService.overdue());
@@ -114,8 +119,8 @@ public class TaskController {
             ,@RequestParam("myImage") MultipartFile imageFile
     ) throws IOException {
         LocalDate curr = LocalDate.now();
-        Task task = new Task(title,deadline,imageFile.getBytes(),curr,"available",content, false);
-        taskService.addTask(task);
+        Task task = new Task(title,deadline,curr,"available",content, false);
+        taskService.addImageAndSaveToDB(task,imageFile);
         log.info(pf("POST -> /task-add: %s image: %s ", task, imageFile.getResource()));
         return new RedirectView("tasks-dashboard");
     }

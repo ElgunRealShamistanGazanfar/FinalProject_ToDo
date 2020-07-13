@@ -59,10 +59,9 @@ public class Task {
     public Task(){
 
     }
-    public Task(String title, Date deadline, byte [] image, LocalDate curr,String status, String content, Boolean complement_status) {
+    public Task(String title, Date deadline,  LocalDate curr,String status, String content, Boolean complement_status) {
         this.title = title;
         this.deadline = deadline;
-        this.image = image;
         this.curr = curr;
         this.content = content;
         this.status = status;

@@ -4,9 +4,17 @@ package app.service;
 import app.entity.Task;
 import app.exception.TaskNotFoundEx;
 import app.repo.TaskRepo;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
@@ -14,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Service
 public class TaskService {
 
@@ -82,5 +91,34 @@ public class TaskService {
         return imp;
     }
 
+    @SneakyThrows
+    public void createImage(byte[] data) {
+        ByteArrayInputStream bis = new ByteArrayInputStream(data);
+        BufferedImage bImage2 = ImageIO.read(bis);
+        ImageIO.write(bImage2, "jpg", new File("output.jpg") );
+        log.info("image created");
+    }
+
+
+
+    // Save image to a DB
+    @SneakyThrows
+    public void addImageAndSaveToDB(Task task, MultipartFile imageFile) {
+        try {
+            byte [] byteObj = new byte[imageFile.getBytes().length];
+            int i = 0;
+            for (byte b : imageFile.getBytes()) {
+                byteObj[i++] = b;
+            }
+                task.setImage(byteObj);
+                taskRepo.save(task);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 }
