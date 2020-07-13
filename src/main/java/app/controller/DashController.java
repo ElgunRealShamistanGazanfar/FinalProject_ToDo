@@ -38,9 +38,6 @@ public class DashController {
     public RedirectView add_important(@PathVariable int id, Model model){
         taskService.addToimportant(id);
         log.info(String.format("Element with id %d added to importants", id));
-        List<Task> chosen = new ArrayList<>();
-        chosen.add(taskService.findTaskById(id).get());
-        model.addAttribute("tsks", chosen);
         return new RedirectView("/tasks-dashboard");
 
     }

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +48,9 @@ public class TaskController {
         String username = ((UserDetails) principal).getUsername();
         model.addAttribute("username", username);
         model.addAttribute("tasks", tasks);
-
+        List<Task> toBeShown = new ArrayList<>();
+        toBeShown.add(taskService.important().get(0));
+        model.addAttribute("shown", toBeShown);
         log.info("GET -> /tasks-dashboards");
         return "tasks-dashboard";
     }
