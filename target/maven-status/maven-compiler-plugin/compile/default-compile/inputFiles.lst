@@ -9,6 +9,7 @@ D:\FinalProject_ToDo\src\main\java\app\repo\MyUserRepo.java
 D:\FinalProject_ToDo\src\main\java\app\controller\UserController.java
 D:\FinalProject_ToDo\src\main\java\app\controller\DashController.java
 D:\FinalProject_ToDo\src\main\java\app\entity\Users.java
+D:\FinalProject_ToDo\src\main\java\app\exception\UserNotFoundEx.java
 D:\FinalProject_ToDo\src\main\java\app\exception\TaskNotFoundEx.java
 D:\FinalProject_ToDo\src\main\java\app\config\PasswordConfig.java
 D:\FinalProject_ToDo\src\main\java\app\Runner.java

@@ -1,4 +1,5 @@
 app\controller\TaskController.class
+app\exception\UserNotFoundEx.class
 app\service\TaskService.class
 app\controller\UserController.class
 app\exception\TaskNotFoundEx.class

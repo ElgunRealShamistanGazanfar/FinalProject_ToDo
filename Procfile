@@ -1,1 +1,2 @@
-web: java $JAVA_OPTS -cp ./target/classes:target/deps/* app.Runner
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/norel-1.0.0.jar
+

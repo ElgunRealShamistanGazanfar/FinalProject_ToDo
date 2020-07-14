@@ -7,7 +7,7 @@
 
 
     <groupId>java.app</groupId>
-    <artifactId>toDoApp</artifactId>
+    <artifactId>norel</artifactId>
     <version>1.0.0</version>
 
     <build>
