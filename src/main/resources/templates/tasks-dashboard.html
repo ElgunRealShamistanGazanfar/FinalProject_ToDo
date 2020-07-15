@@ -37,7 +37,7 @@
 				<span class="main-header-profile-welcome">Welcome,</span>
 				<span class="main-header-username" th:text="${username}" ></span>
 			</div>
-			<img class="main-header-user-icon" src="/img/user-icon-with-background.svg" alt="User Icon">
+			<img class="main-header-user-icon" th:src="${profile}" width="64.17" style="border-radius: 30px;" height="70" alt="User Icon">
 			<div class="hidden-accordion-wrapper">
 				<ul class="hidden-accordion">
 					<li class="hidden-accordion-item"><a href="/tasks-archive" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/archive-icon.svg" alt="User Icon">Archive</a></li>
@@ -107,20 +107,20 @@
 							<input name="name-task" type="text" th:placeholder="${tsk.getTitle()}" class="task-card-input">
 						</div>
    					</div>
-   					<div class="task-card-actions">
-   						<a href="#" class="task-card-actions-item">
-   							<img src="/img/arrow.png" alt="" class="task-card-actions-icon">
-   							Share
-   						</a>
-   						<a th:href="@{'/add/'+ ${tsk.getId()}}" class="task-card-actions-item">
-   							<img src="/img/bell.png" alt="" class="task-card-actions-icon">
-   							Add to important
-   						</a>
-   						<a th:href="@{'/delete/'+ ${tsk.getId()}}" class="task-card-actions-item">
-   							<img src="/img/trash-bin.png" alt="" class="task-card-actions-icon">
-   							Delete
-   						</a>
-   					</div>
+<!--   					<div class="task-card-actions">-->
+<!--   						<a href="#" class="task-card-actions-item">-->
+<!--   							<img src="/img/arrow.png" alt="" class="task-card-actions-icon">-->
+<!--   							Share-->
+<!--   						</a>-->
+<!--   						<a th:href="@{'/add/'+ ${tsk.getId()}}" class="task-card-actions-item">-->
+<!--   							<img src="/img/bell.png" alt="" class="task-card-actions-icon">-->
+<!--   							Add to important-->
+<!--   						</a>-->
+<!--   						<a th:href="@{'/delete/'+ ${tsk.getId()}}" class="task-card-actions-item">-->
+<!--   							<img src="/img/trash-bin.png" alt="" class="task-card-actions-icon">-->
+<!--   							Delete-->
+<!--   						</a>-->
+<!--   					</div>-->
    				</div>
    				<div class="task-card-right-col">
    					<h4 class="task-card-header">Task Description</h4>

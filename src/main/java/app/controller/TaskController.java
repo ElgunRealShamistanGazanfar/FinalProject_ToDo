@@ -52,12 +52,13 @@ public class TaskController {
         Collection<Task> tasks=taskService.fetchAll(LoggedUserId);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
+        String username = registerService.logged_user().get().getFullName();
         model.addAttribute("username", username);
         model.addAttribute("tasks", tasks);
         List<Task> toBeShown = new ArrayList<>();
         toBeShown.add(taskService.important(LoggedUserId).get(0));
         model.addAttribute("shown", toBeShown);
+        registerService.addProfile(model);
         log.info("GET -> /tasks-dashboards");
         return "tasks-dashboard";
     }
@@ -66,35 +67,39 @@ public class TaskController {
     public String handle_post1( @RequestParam("task-type") String tsk_status, Model model) {
          int LoggedUserId=(int) registerService.logged_user().get().getId();
         log.info("POST -> /tasks-dashboards ->" + tsk_status);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
-
+        String username = registerService.logged_user().get().getFullName();
 
         List<Task> toBeShown = new ArrayList<>();
         toBeShown.add(taskService.important(LoggedUserId).get(0));
         model.addAttribute("shown", toBeShown);
+        registerService.addProfile(model);
 
           switch (tsk_status){
             case "overdue":
                 model.addAttribute("tasks",taskService.overdue(LoggedUserId));
                 model.addAttribute("username", username);
+                registerService.addProfile(model);
                 break;
             case "today":
                 model.addAttribute("tasks",taskService.today(LoggedUserId));
                 model.addAttribute("username", username);
+                registerService.addProfile(model);
                 break;
             case "done":
                 model.addAttribute("tasks",taskService.done(LoggedUserId));
                 model.addAttribute("username", username);
+                registerService.addProfile(model);
                 break;
             case "available":
                 model.addAttribute("tasks",taskService.fetchAll(LoggedUserId));
                 model.addAttribute("username", username);
+                registerService.addProfile(model);
                 break;
 
              case "important":
                  model.addAttribute("tasks",taskService.important(LoggedUserId));
                  model.addAttribute("username", username);
+                 registerService.addProfile(model);
                   break;
         }
 
@@ -106,13 +111,22 @@ public class TaskController {
 
 
     @GetMapping("tasks-archive")
-    public String handle_tasks_archive_get() {
+    public String handle_tasks_archive_get(Model model) {
+        if (registerService.logged_user().get().getProfile()!=null){
+            model.addAttribute("profile", registerService.logged_user().get().getProfile());
+        }else {
+            model.addAttribute("profile", "/img/user-icon-with-background.svg");
+        }
         log.info("GET -> /tasks-archive");
         return "tasks-archive";
     }
     @GetMapping("create-task")
-    public String handle_goAdd_Task_get() {
+    public String handle_goAdd_Task_get(Model model) {
         log.info("GET -> /go_add_task");
+
+        String username = registerService.logged_user().get().getFullName();
+        registerService.addProfile(model);
+        model.addAttribute("username", username);
         return "add-task";
     }
 

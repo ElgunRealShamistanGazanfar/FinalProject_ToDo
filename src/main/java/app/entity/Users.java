@@ -23,6 +23,10 @@ public class Users {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "profile")
+    @Lob
+    private byte [] profile;
+
     @Column(name = "email")
     private String email;
 

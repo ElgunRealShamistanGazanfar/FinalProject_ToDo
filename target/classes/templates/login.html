@@ -42,7 +42,7 @@
                 <form class="login-form" id="login-form"  action="/login" method="post">
 
                     <div th:if="${param.error}" class="alert alert-error">
-                        <p style="color: red">Invalid username and password.</p>
+                        <p style="color: red; font-size: 30px;">Invalid username and password.</p>
                     </div>
 
 
@@ -87,14 +87,14 @@
 </form>
 
 
-<div class="login-social-links">
-    <div class="social-links-caption">
-        <span class="social-links-caption-text">Or you can Join with</span>
-    </div>
-    <div class="social-links-list">
-        <i class="social-link social-link-google-plus"></i><a href="/landing">i class="social-link social-link-facebook"></i></a><i class="social-link social-link-linkedin"></i><i class="social-link social-link-twitter"></i>
-    </div>
-</div>
+<!--<div class="login-social-links">-->
+<!--    <div class="social-links-caption">-->
+<!--        <span class="social-links-caption-text">Or you can Join with</span>-->
+<!--    </div>-->
+<!--    <div class="social-links-list">-->
+<!--        <i class="social-link social-link-google-plus"></i></i><i class="social-link social-link-linkedin"></i><i class="social-link social-link-twitter"></i>-->
+<!--    </div>-->
+<!--</div>-->
                 
                                 
                 
@@ -103,20 +103,8 @@
             </div>
         </div>
     </div>
-        <div class="unauthenticated">
-            <a class="btn" href="/login">Login</a>
-        </div>
-        <div class="authenticated" style="display: none">
-            Logged in as: <span id="user"></span>
-            <div><button onClick="logout()" class="btn">Logout</button></div>
-        </div>
+
 </main> 
 </body>
-<script type="text/javascript">
-    $.get("/user", function(data) {
-        $("#user").html(data.name);
-        $(".unauthenticated").hide()
-        $(".authenticated").show()
-    });
-</script>
+
 </html>

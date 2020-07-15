@@ -40,7 +40,7 @@
 
 
                 
-                    <form action="/sign-up" class="sign-up-form" id="sign-up-form" method="post">
+                    <form action="/sign-up" class="sign-up-form" id="sign-up-form" method="post" enctype="multipart/form-data">
                         <div>
                             <p style="color: green; font-size: 30px;" th:text="${suc_reg}">.</p>
                         </div>
@@ -85,6 +85,10 @@
 
         
 </div>
+                        <div>
+                            <input type="file" name="myImage" style="border-radius: 30px; color: #3855E1" width="17" height="35"><br>
+                        </div>
+                        <br>
 
     <div class="button-container">
         <input type="submit" class="btn btn-dark" value="Create account">

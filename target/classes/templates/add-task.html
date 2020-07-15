@@ -20,9 +20,9 @@
 		<div class="main-header-profile-wrapper">
 			<div class="main-header-profile-credentials">
 				<span class="main-header-profile-welcome">Welcome,</span>
-				<span class="main-header-username">Sample User</span>
+				<span class="main-header-username" th:text="${username}"></span>
 			</div>
-			<img class="main-header-user-icon" src="/img/user-icon-with-background.svg" alt="User Icon">
+			<img class="main-header-user-icon" th:src="${profile}" width="64.17" height="70" style="border-radius: 30px;" alt="User Icon">
 			<div class="hidden-accordion-wrapper">
 				<ul class="hidden-accordion">
 					<li class="hidden-accordion-item"><a href="./tasks-archive.html" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="../static/img/archive-icon.svg" alt="User Icon">Archive</a></li>
