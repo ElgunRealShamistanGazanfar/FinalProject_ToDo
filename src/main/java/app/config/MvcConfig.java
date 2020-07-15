@@ -20,10 +20,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return driverManagerDataSource;
     }
 
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/login1").setViewName("login1");
-//    }
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("login");
+    }
 
 
 

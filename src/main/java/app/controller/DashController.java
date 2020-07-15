@@ -2,14 +2,14 @@ package app.controller;
 
 
 import app.entity.Task;
-import app.repo.TaskRepo;
+import app.entity.Users;
+import app.service.RegisterService;
 import app.service.TaskService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +17,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -27,12 +25,14 @@ import java.util.Optional;
 public class DashController {
 
     private final TaskService taskService;
+    private final RegisterService registerService;
 
-    public DashController(TaskService taskService) {
+    public DashController(TaskService taskService, RegisterService registerService) {
         this.taskService = taskService;
+        this.registerService = registerService;
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("delete/{id}")
     public RedirectView delete_task(@PathVariable int id){
         log.info(String.format("GET -> deleting task with id: %d", id));
         taskService.deleteTask(id);
@@ -40,7 +40,7 @@ public class DashController {
 
     }
 
-    @GetMapping("/add/{id}")
+    @GetMapping("add/{id}")
     public RedirectView add_important(@PathVariable int id, Model model){
         taskService.addToimportant(id);
         log.info(String.format("Element with id %d added to importants", id));
@@ -48,7 +48,7 @@ public class DashController {
 
     }
 
-    @GetMapping("/show/{id}")
+    @GetMapping("show/{id}")
     public void showImageDB(@PathVariable("id") Integer taskId, HttpServletResponse response) throws IOException {
 
         Optional<Task> res = taskService.findTaskById(taskId);
@@ -70,7 +70,10 @@ public class DashController {
         }
     }
 
-    @PostMapping("/edit")
+
+
+
+    @PostMapping("edit")
     public RedirectView edit_post(@RequestParam("name-task")String edited_title,
                                   @RequestParam("task-card-date") Date edited_date,
                                   @RequestParam("unvisible_id")int id
