@@ -49,7 +49,7 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping
+    @GetMapping("/")
     public String handle_root() {
         log.info("getMapping -> /  (root)");
         return "login";
