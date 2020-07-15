@@ -4,6 +4,7 @@
 
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
 
 
     <groupId>java.app</groupId>
@@ -30,6 +31,22 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>app.Runner</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
