@@ -36,22 +36,16 @@ public class DBApplicationUserDaoService implements ApplicationUserDao {
 
 
     private List<ApplicationUser> getApplicationUsers() {
-
-
         List<String> roles = myUserRepo.findAll().stream().map(Users::getRoles).collect(Collectors.toList());
 
         HashSet<GrantedAuthority> authorities = new HashSet<>(roles.size());
         for (String role : roles){
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
         }
-
         List<ApplicationUser> applicationUsers =myUserRepo.findAll()
                 .stream().map(e-> new ApplicationUser(e.getUsername(), passwordEncoder.encode(e.getPassword()), authorities,true,true,true,true )).collect(Collectors.toList());
 
-
-        return applicationUsers;
+          return applicationUsers;
     }
-
-
 
 }

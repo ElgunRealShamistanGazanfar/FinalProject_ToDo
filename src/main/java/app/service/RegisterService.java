@@ -1,6 +1,5 @@
 package app.service;
 
-import app.entity.Task;
 import app.entity.Users;
 import app.repo.MyUserRepo;
 import lombok.SneakyThrows;

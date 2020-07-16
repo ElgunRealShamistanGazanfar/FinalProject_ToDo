@@ -37,8 +37,6 @@ public class Users {
     private String roles;
 
 
-
-
     @OneToMany(mappedBy = "users")
     private Set<Task> tasks;
 

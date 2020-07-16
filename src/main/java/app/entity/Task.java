@@ -1,5 +1,6 @@
 package app.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
  */
 
 @Data
+@AllArgsConstructor
 @Entity
 public class Task {
 
