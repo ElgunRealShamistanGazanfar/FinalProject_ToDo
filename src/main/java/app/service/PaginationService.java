@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,14 +28,14 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @Service
-public class TaskService {
+public class PaginationService {
 
     @Autowired
     private final TaskRepo taskRepo;
 
     private final RegisterService registerService;
 
-    public TaskService(TaskRepo taskRepo, RegisterService registerService) {
+    public PaginationService(TaskRepo taskRepo, RegisterService registerService) {
         this.taskRepo = taskRepo;
         this.registerService = registerService;
     }
@@ -77,7 +78,7 @@ public class TaskService {
     }
 
     public void deleteTask(int id) {
-            taskRepo.deleteById(id);
+        taskRepo.deleteById(id);
     }
 
     public void addToimportant(int id) {
@@ -97,50 +98,19 @@ public class TaskService {
         return imp;
     }
 
-    @SneakyThrows
-    public void createImage(byte[] data) {
-        ByteArrayInputStream bis = new ByteArrayInputStream(data);
-        BufferedImage bImage2 = ImageIO.read(bis);
-        ImageIO.write(bImage2, "jpg", new File("output.jpg") );
-        log.info("image created");
+
+    public Page<Task> pageForToday(Pageable pageable){
+        List<Task> pg = fetchAll((int)registerService
+                .logged_user().get().getId())
+                .stream().filter(t->t.getDeadline()
+                        .equals(java.sql.Date.valueOf(LocalDate.now())))
+                .collect(Collectors.toList());
+        Page<Task> res =new PageImpl<Task>(pg,pageable, pg.size());
+        return res;
     }
 
 
 
-    // Save image to a DB
-    @SneakyThrows
-    public void addImageAndSaveToDB(Task task, MultipartFile imageFile) {
-
-        try {
-            byte [] byteObj = new byte[imageFile.getBytes().length];
-            int i = 0;
-            for (byte b : imageFile.getBytes()) {
-                byteObj[i++] = b;
-            }
-                task.setImage(byteObj);
-                taskRepo.save(task);
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    public Page<Task> getTaskListPaged(MyUser myUser, Pageable pageable) {
-        Page<Task> tasks = taskRepo.findAllByMyUser(myUser,pageable);
-
-        return tasks;
-    }
-
-
-    public void updateTitleAndDate(int id, java.sql.Date edited_date, String edited_title) {
-        Optional<Task> taskById = findTaskById(id);
-        taskRepo.deleteById(id);
-        Task tsk  = taskById.orElseThrow(TaskNotFoundEx::new);
-        tsk.setTitle(edited_title);
-        tsk.setDeadline(edited_date);
-        taskRepo.save(tsk);
-    }
 }

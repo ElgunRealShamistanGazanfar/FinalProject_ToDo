@@ -9,7 +9,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @Entity
-public class Users {
+public class MyUser {
 
 
     @Id
@@ -37,14 +37,14 @@ public class Users {
     private String roles;
 
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "myUser")
     private Set<Task> tasks;
 
-    public Users() {
+    public MyUser() {
     }
 
 
-    public Users(String fullName, String username, String email, String password, String roles, Set<Task> tasks) {
+    public MyUser(String fullName, String username, String email, String password, String roles, Set<Task> tasks) {
             this.fullName = fullName;
             this.username = username;
             this.email = email;
@@ -53,7 +53,7 @@ public class Users {
             this.tasks=tasks;
     }
 
-    public Users(String fullname, String username, String email, String password, String roles) {
+    public MyUser(String fullname, String username, String email, String password, String roles) {
         this.fullName = fullname;
         this.username = username;
         this.email = email;

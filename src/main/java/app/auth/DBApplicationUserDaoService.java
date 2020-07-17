@@ -1,6 +1,6 @@
 package app.auth;
 
-import app.entity.Users;
+import app.entity.MyUser;
 import app.repo.MyUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,7 +36,7 @@ public class DBApplicationUserDaoService implements ApplicationUserDao {
 
 
     private List<ApplicationUser> getApplicationUsers() {
-        List<String> roles = myUserRepo.findAll().stream().map(Users::getRoles).collect(Collectors.toList());
+        List<String> roles = myUserRepo.findAll().stream().map(MyUser::getRoles).collect(Collectors.toList());
 
         HashSet<GrantedAuthority> authorities = new HashSet<>(roles.size());
         for (String role : roles){

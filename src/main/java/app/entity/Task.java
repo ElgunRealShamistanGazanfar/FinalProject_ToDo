@@ -56,19 +56,19 @@ public class Task {
                     referencedColumnName = "usr_id"
             ) }
     )
-    private Users users;
+    private MyUser myUser;
 
     public Task(){
 
     }
-    public Task(String title, Date deadline,  LocalDate curr,String status, String content, Boolean complement_status, Users users) {
+    public Task(String title, Date deadline,  LocalDate curr,String status, String content, Boolean complement_status, MyUser myUser) {
         this.title = title;
         this.deadline = deadline;
         this.curr = curr;
         this.content = content;
         this.status = status;
         this.complement_status = complement_status;
-        this.users = users;
+        this.myUser = myUser;
     }
     public Task(Boolean complement_status){
         this.complement_status = complement_status;
