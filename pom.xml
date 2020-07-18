@@ -37,21 +37,23 @@
     <build>
         <plugins>
             <plugin>
-
-                <!-- Building an executable jar -->
-
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>2.0.3</version>
                 <configuration>
-                    <archive>
-                        <manifest>
-
-                            <!-- give full qualified name of your main class-->
-                            <mainClass>app.Runner</mainClass>
-
-                        </manifest>
-                    </archive>
+                    <appName>callicoder-heroku-maven-demo</appName>
+                    <includeTarget>false</includeTarget>
+                    <includes>
+                        <include>${project.build.directory}/${project.build.finalName}.jar</include>
+                    </includes>
+                    <jdkVersion>${java.version}</jdkVersion>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -jar ${project.build.directory}/${project.build.finalName}.jar</web>
+                    </processTypes>
                 </configuration>
             </plugin>
         </plugins>
