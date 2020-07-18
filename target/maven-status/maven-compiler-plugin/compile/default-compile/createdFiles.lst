@@ -14,6 +14,7 @@ app\config\WebSecurityConfig.class
 app\repo\MyUserRepo.class
 app\auth\ApplicationUserService.class
 app\service\RegisterService.class
+app\AppController.class
 app\entity\Task.class
 app\controller\ReportController.class
 app\Runner.class
