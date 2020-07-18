@@ -78,39 +78,40 @@
         </div>
 
 		<div  th:if="${not #lists.isEmpty(tasks)}">
-			<nav aria-label="Pagination" th:if="${tasks.totalPages gt 0}">
-				<ul class="pagination justify-content-center font-weight-medium">
-					<li class="page-item" th:classappend="${tasks.number eq 0} ? 'disabled'">
-						<a class="page-link svg-icon"
-						   th:href="@{/report/table/paged?page={id}(id=${tasks.number lt 1 ? 0 : tasks.number-1})}"
-						   aria-label="Previous"
-						   title="Previous Page" rel="tooltip">
-							<span aria-hidden="true" data-feather="chevrons-left" width="20" height="20">&laquo;</span>
-						</a>
-					</li>
-					<li class="page-item" th:classappend="${i eq tasks.number + 1} ? 'active'"
-						th:each=" i : ${#numbers.sequence(tasks.totalPages >= 10 + tasks.number ? tasks.number + 1 : 1, tasks.totalPages > 10 + tasks.number ? tasks.number + 10 : tasks.totalPages, 1)}">
-						<a class="page-link" th:href="@{/report/table/paged?page={id}(id=${i}-1)}" th:text="${i}"
-						   th:title="${'Page '+ (i)}"
-						   rel="tooltip"></a>
-					</li>
-					<li class="page-item disabled" th:if="${tasks.number + 10 < tasks.totalPages}">
-						<a class="page-link svg-icon" href="#">
-							<span data-feather="more-horizontal" width="20" height="20">...</span>
-						</a>
-					</li>
-					<li class="page-item" th:classappend="${tasks.number + 10 >= tasks.totalPages} ? 'disabled'">
-						<a class="page-link svg-icon" th:href="@{/report/table/paged?page={id}(id=${tasks.number + 2})}"
-						   aria-label="Next"
-						   title="Next Page" rel="tooltip">
-							<span aria-hidden="true" data-feather="chevrons-right" width="20" height="20">&raquo;</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
+
+            <nav aria-label="Pagination" th:if="${tasks.totalPages gt 0}">
+                <ul class="pagination justify-content-center font-weight-medium">
+                    <li class="page-item" th:classappend="${tasks.number eq 0} ? 'disabled'">
+                        <a class="page-link svg-icon"
+                           th:href="@{/tasks-dashboard?page={id}(id=${tasks.number lt 1 ? 0 : tasks.number-1})}"
+                           aria-label="Previous"
+                           title="Previous Page" rel="tooltip">
+                            <span aria-hidden="true" data-feather="chevrons-left" width="20" height="20">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${i eq tasks.number + 1} ? 'active'"
+                        th:each=" i : ${#numbers.sequence(tasks.totalPages >= 10 + tasks.number ? tasks.number + 1 : 1, tasks.totalPages > 10 + tasks.number ? tasks.number + 10 : tasks.totalPages, 1)}">
+                        <a class="page-link" th:href="@{/tasks-dashboard?page={id}(id=${i}-1)}" th:text="${i}"
+                           th:title="${'Page '+ (i)}"
+                           rel="tooltip"></a>
+                    </li>
+                    <li class="page-item disabled" th:if="${tasks.number + 10 < tasks.totalPages}">
+                        <a class="page-link svg-icon" href="#">
+                            <span data-feather="more-horizontal" width="20" height="20">...</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${tasks.number + 10 >= tasks.totalPages} ? 'disabled'">
+                        <a class="page-link svg-icon" th:href="@{/report/table/paged?page={id}(id=${tasks.number + 2})}"
+                           aria-label="Next"
+                           title="Next Page" rel="tooltip">
+                            <span aria-hidden="true" data-feather="chevrons-right" width="20" height="20">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
 
-		</div>
+        </div>
 
         <div class="tasks-list" th:if="${not #lists.isEmpty(tasks)}">
 			<div class="task" th:each="task : ${tasks}" th:onclick="|chosen_div('${task.getId()}')|">

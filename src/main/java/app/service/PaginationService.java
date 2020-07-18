@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +34,9 @@ public class PaginationService {
     @Autowired
     private final TaskRepo taskRepo;
 
+    @Autowired
+    private TaskService taskService;
+
     private final RegisterService registerService;
 
     public PaginationService(TaskRepo taskRepo, RegisterService registerService) {
@@ -40,9 +44,12 @@ public class PaginationService {
         this.registerService = registerService;
     }
 
-    public Collection<Task> fetchAll(int loggedUser_id) {
-        return taskRepo.findAll().stream().filter(t->t.getMyUser().getId()==loggedUser_id).collect(Collectors.toList());
-    }
+    public Page<Task> fetchAll(Pageable pageable) {
+        List<Task> pg = (List<Task>) taskService.fetchAll((int)registerService
+                .logged_user().get().getId());
+        Page<Task> res =new PageImpl<Task>(pg,pageable, pg.size());
+        return res;
+           }
 
     public Optional<Task> findTaskById(int id) {
 
@@ -64,18 +71,7 @@ public class PaginationService {
         return curr_date.compareTo(deadline) > 0;
     }
 
-    public List<Task> done(int userId) {
-        return fetchAll(userId).stream().filter(e -> isDone(e.getId())).collect(Collectors.toList());
-    }
 
-    public List<Task> overdue(int userId) {
-        return fetchAll(userId).stream().filter(e -> isOverdue(LocalDate.now(), e.getDeadline())).collect(Collectors.toList());
-
-    }
-
-    public List<Task> today(int userId) {
-        return fetchAll(userId).stream().filter(e -> e.getDeadline().equals(java.sql.Date.valueOf(LocalDate.now()))).collect(Collectors.toList());
-    }
 
     public void deleteTask(int id) {
         taskRepo.deleteById(id);
@@ -90,17 +86,10 @@ public class PaginationService {
 
     }
 
-    public List<Task> important(int userId) {
-        List<Task> imp = fetchAll(userId).stream().filter(t -> t.getStatus().equals("important")).collect(Collectors.toList());
-        if (imp.isEmpty()){
-            imp.add(0,new Task(false));
-        }
-        return imp;
-    }
 
 
     public Page<Task> pageForToday(Pageable pageable){
-        List<Task> pg = fetchAll((int)registerService
+        List<Task> pg = taskService.fetchAll((int)registerService
                 .logged_user().get().getId())
                 .stream().filter(t->t.getDeadline()
                         .equals(java.sql.Date.valueOf(LocalDate.now())))
@@ -109,6 +98,33 @@ public class PaginationService {
         return res;
     }
 
+    public Page<Task> pageForImportant(Pageable pageable){
+        List<Task> pg = taskService.fetchAll((int)registerService
+                .logged_user().get().getId())
+                .stream().filter(t -> t.getStatus().equals("important"))
+                .collect(Collectors.toList());
+        Page<Task> res =new PageImpl<Task>(pg,pageable, pg.size());
+
+        return res;
+    }
+
+    public Page<Task> pageForOverdue(Pageable pageable){
+        List<Task> pg = taskService.fetchAll((int)registerService
+                .logged_user().get().getId())
+                .stream().filter(e -> isOverdue(LocalDate.now(), e.getDeadline()))
+                .collect(Collectors.toList());
+        Page<Task> res =new PageImpl<Task>(pg,pageable, pg.size());
+        return res;
+    }
+
+    public Page<Task> pageForDone(Pageable pageable){
+        List<Task> pg = taskService.fetchAll((int)registerService
+                .logged_user().get().getId())
+                .stream().filter(e -> isDone(e.getId()))
+                .collect(Collectors.toList());
+        Page<Task> res =new PageImpl<Task>(pg,pageable, pg.size());
+        return res;
+    }
 
 
 

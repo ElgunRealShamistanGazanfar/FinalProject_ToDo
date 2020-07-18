@@ -94,11 +94,11 @@ public class DashController {
 
 
 
-    @GetMapping("/tasks-dashboard")
-    public String tasksDashboard(){
-        log.error("Get -> /dash");
-        return "tasks-dashboard";
-
-    }
+//    @GetMapping("/tasks-dashboard")
+//    public String tasksDashboard(){
+//        log.error("Get -> /dash");
+//        return "tasks-dashboard";
+//
+//    }
 
 }
