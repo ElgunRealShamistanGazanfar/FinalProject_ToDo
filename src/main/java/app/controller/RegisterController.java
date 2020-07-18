@@ -34,11 +34,11 @@ public class RegisterController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/")
-    public String handle_root() {
-        log.info("getMapping -> /  (root)");
-        return "login";
-    }
+//    @GetMapping("/")
+//    public String handle_root() {
+//        log.info("getMapping -> /  (root)");
+//        return "login";
+//    }
 
 
     @GetMapping("reset-password")
