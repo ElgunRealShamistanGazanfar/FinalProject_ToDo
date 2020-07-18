@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/toDoApp-1.0.0.jar --server.port=$PORT $JAR_OPTS
+web java -Dserver.port=$PORT $JAVA_OPTS -jar target/norel-1.0.0.jar
