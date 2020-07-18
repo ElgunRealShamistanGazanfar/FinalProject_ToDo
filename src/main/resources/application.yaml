@@ -16,9 +16,9 @@ spring:
 
 
   datasource:
-    url: ${jdbc:postgres://ec2-54-211-210-149.compute-1.amazonaws.com:5432/d8a9gn2v4u78h4}
-    username: ${eqnmseywtoppux}
-    password: ${56ee48e2e5f3ec727053c1460c09b4dbdd5bdf285ba66c101fdc436256b6f6b6}
+    url: ${jdbc:postgres://ec2-54-159-138-67.compute-1.amazonaws.com:5432/dcncsdkbepgi75}
+    username: ${hcmbujtorvioei}
+    password: ${41f188925e1d14d4197dccc43cab04e71a5a9d7f37e0497a90227a345673bc4}
   #    initialization-mode: always
 
   jpa:
