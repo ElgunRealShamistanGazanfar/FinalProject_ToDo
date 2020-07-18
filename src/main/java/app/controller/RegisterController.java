@@ -34,7 +34,7 @@ public class RegisterController {
         this.taskService = taskService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public String handle_root() {
         log.info("getMapping -> /  (root)");
         return "login";
