@@ -5,6 +5,18 @@ spring:
   main:
     banner-mode: off
 
+#  mail:
+#    username: username
+#    password: password
+#    port: 587
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#    host: smtp.gmail.com
+
   security:
     oauth2:
       client:
@@ -16,9 +28,9 @@ spring:
 
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: sh7513244
+    url: ${jdbc:postgres://ec2-54-159-138-67.compute-1.amazonaws.com:5432/dcncsdkbepgi75}
+    username: ${hcmbujtorvioei}
+    password: ${41f188925e1d14d4197dccc43cab04e71a5a9d7f37e0497a90227a345673bc4}
   #    initialization-mode: always
 
   jpa:

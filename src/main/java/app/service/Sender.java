@@ -1,6 +1,7 @@
 package app.service;
 
 import app.entity.EmailStatus;
+import com.sun.xml.fastinfoset.sax.Properties;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,8 @@ public class Sender {
             mail.setContent(text, "text/plain");
             mail.addRecipients(Message.RecipientType.TO, to);
             javaMailSender.send(mail);
-
+            java.util.Properties props = new java.util.Properties();
+            props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
             log.info("Send email '{}' to: {}", subject, to);
 
             return new EmailStatus(to, subject, text).success();

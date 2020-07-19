@@ -4,6 +4,7 @@ app\entity\MyUser.class
 app\service\TaskService.class
 app\controller\UserController.class
 app\exception\TaskNotFoundEx.class
+app\service\Sender.class
 app\config\PasswordConfig.class
 app\controller\RegisterController.class
 app\auth\ApplicationUser.class
@@ -11,8 +12,11 @@ app\config\MvcConfig.class
 app\controller\DashController.class
 app\auth\DBApplicationUserDaoService.class
 app\config\WebSecurityConfig.class
+app\entity\EmailStatus.class
+app\entity\Mail.class
 app\repo\MyUserRepo.class
 app\auth\ApplicationUserService.class
+app\controller\MailController.class
 app\service\RegisterService.class
 app\AppController.class
 app\entity\Task.class

@@ -3,10 +3,42 @@
 <head>
 
 </head>
-<body>
-<img src="/img/search-icon.svg" alt="Search Icon">
-<h1>Adə Düz əməlli şey yaz da ora</h1>
-<img src="/img/angry_man.jpg" width="1600px" height="600px">
+<script>
+
+    function myFunction() {
+        document.getElementById("ed").style.display = "block";
+        document.getElementById("ed").style.transition = "1s";
+    }
+</script>
+<style>
+    body{
+        /*background-color: #EDF2F5;*/
+    }
+    #ed{
+        border-radius: 100%;
+        background-color: #3855E1;
+        width: 400px;
+        height: 400px;
+        box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+        margin-left: 40%;
+        margin-top: 10%;
+
+    }
+    #er{
+        padding-top: 35%;
+        font-size: 80px;
+        color: white;
+    }
+</style>
+<body  onload="myFunction()">
+<div id="ed" style="display: none">
+    <center>
+        <p id="er">Error</p>
+        <a href="/tasks-dashboard" style="color: white; text-decoration: none;">Go Tasks-Dashboard</a>
+
+    </center>
+
+</div>
 
 </body>
 </html>

@@ -36,6 +36,8 @@ public class MyUser {
     @Column(name = "roles")
     private String roles;
 
+    @ManyToMany(mappedBy = "users_g")
+    private Set<MyGroup> groups;
 
     @OneToMany(mappedBy = "myUser")
     private Set<Task> tasks;

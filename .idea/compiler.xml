@@ -8,14 +8,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Crazy" />
-        <module name="FinalProject_ToDo" />
+        <module name="norel" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FinalProject_ToDo" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Crazy" options="-parameters" />
       <module name="FinalProject_ToDo" options="-parameters" />
+      <module name="norel" options="-parameters" />
     </option>
   </component>
 </project>

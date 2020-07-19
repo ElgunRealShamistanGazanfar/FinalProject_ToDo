@@ -55,6 +55,13 @@ public class RegisterController {
         return rs.isCorrect(fullname, email)? "backUp": "login";
     }
 
+    @GetMapping("/send")
+    public String sendMessage_get() {
+        return "mail";
+    }
+    
+
+
     @GetMapping("sign-up")
     public String handle_get4() {
         log.info("GET -> /sign-up");

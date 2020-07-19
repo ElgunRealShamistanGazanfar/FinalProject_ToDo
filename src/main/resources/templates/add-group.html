@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #header{
+            height: 100px;
+            background-color: #3855E1;
+            width: 100%;
+            margin-bottom: 90px;
+
+        }
+        #cr{
+            background-color: #3855E1;
+          width: 200px;
+            height: 200px;
+            padding: 20px 20px 20px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            margin-left: 20%;
+        }
+
+        #cr:hover{
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.8), 0 19px 40px 0 rgba(0, 0, 0, 0.6);
+            /*width: 230px;*/
+            /*height: 230px;*/
+            transition: 0.2s;
+        }
+        #src{
+            background-color: #3855E1;
+            padding: 20px 20px 20px 20px;
+            border-radius: 30px;
+            height: 140px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            width: 15%;
+            margin-left: 10%;
+
+        }
+        #src:hover{
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.8), 0 19px 40px 0 rgba(0, 0, 0, 0.6);
+            /*width: 230px;*/
+            /*height: 230px;*/
+            transition: 0.2s;
+        }
+        #myGroup{
+            background-color: #3855E1;
+            color: white;
+            border-radius: 10px;
+            width: 30%;
+            padding: 10px 10px 10px 10px;
+        }
+        #myGroup:hover{
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.8), 0 19px 40px 0 rgba(0, 0, 0, 0.6);
+            /*width: 230px;*/
+            /*height: 230px;*/
+            transition: 0.2s;
+        }
+
+
+
+        #tbl{
+            margin-top: 100px;
+            margin-left: 20px;
+
+        }
+        #tbl table{
+            width: 100%;
+           background-color: #3855E1;
+            border-radius: 40px;
+            color: white;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="header">
+<img src="/img/iba-tech-logo-white.svg" style="margin-left: 10px; margin-top: 10px;">
+<!--    <div class="main-header-profile-wrapper">-->
+<!--        <div class="main-header-profile-credentials">-->
+<!--            <span class="main-header-profile-welcome">Welcome,</span>-->
+<!--            <span class="main-header-username" th:text="${username}" ></span>-->
+<!--        </div>-->
+<!--        <img class="main-header-user-icon" th:src="${profile}" width="64.17" style="border-radius: 30px;" height="70" alt="User Icon">-->
+<!--        <div class="hidden-accordion-wrapper">-->
+<!--            <ul class="hidden-accordion">-->
+<!--                <li class="hidden-accordion-item"><a href="/tasks-archive" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/archive-icon.svg" alt="User Icon">Archive</a></li>-->
+<!--                <li class="hidden-accordion-item"><a href="/tasks-dashboard" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/favourite-icon.svg" alt="Favourite Icon">My tasks</a></li>-->
+<!--                <li class="hidden-accordion-item"><a href="/login" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/log-out-icon.svg" alt="Log Out Icon">Log Out</a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+
+<div style="display: flex">
+
+    <form action="/create-group" method="post" id="cr">
+        <center>
+        <h2 style="color: white">Create Group</h2>
+        <input style="border-radius: 10px; border: none;" type="text" name="groupName" placeholder=" Add group name"><br><br>
+        <input style="border-radius: 10px; border: none;" type="text" name="groupPass" placeholder=" Add group password"><br><br>
+        <input style="border-radius: 10px; border: none;" type="text" name="groupDesc" placeholder=" Add a description"><br><br>
+
+        <input type="submit" style="color: #3855E1; cursor: pointer; background-color: white; border: none; border-radius: 3px" value="Create">
+        </center>
+    </form>
+
+
+
+
+
+
+
+<form action="/search-group" method="post" id="src">
+    <center>
+    <h2 style="color: white">Search Group</h2>
+    <input type="text"  style="border-radius: 10px; border: none;" name="group" placeholder="Search for Group"><br><br>
+    <input style="color: #3855E1; cursor: pointer; background-color: white; border: none; border-radius: 3px" type="submit">
+
+    </center>
+</form>
+
+    <table class="table table-hover " id="myGroup" style="margin-left: 5%">
+        <thead class="thead-inverse">
+
+
+        <tr>
+
+            <th>ID</th>
+            <th>GroupName</th>
+            <th>Go</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="myGroup : ${myGroups}">
+            <td th:text="${myGroup.getId()}"></td>
+            <td th:text="${myGroup.getGroupName()}"></td>
+            <!--            <td th:text="${group.getUsers_g()}">Members</td>-->
+            <td><a th:href="@{'/go/'+ ${myGroup.getId()}}" style="color: white; text-decoration: none">Go</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+<!--<div id="mytbl">-->
+
+
+
+
+<!--</div>-->
+
+<!--<br>-->
+<!--<div>-->
+<!--   -->
+<!--    <h3 th:text="${createMes}" style="color: limegreen"></h3>-->
+<!--</div>-->
+
+
+
+<div id="tbl">
+
+    <p style="color: red" th:text="${grp_msg}"></p><br>
+    <table class="table table-hover ">
+        <thead class="thead-inverse">
+        <tr>
+            <th>ID</th>
+            <th>GroupName</th>
+            <th>Join</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="group : ${groups}">
+            <td th:text="${group.getId()}"></td>
+            <td th:text="${group.getGroupName()}"></td>
+<!--            <td th:text="${group.getUsers_g()}">Members</td>-->
+            <td><a th:href="@{'/join/'+ ${group.getId()}}" style="color: white; text-decoration: none">Join</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>

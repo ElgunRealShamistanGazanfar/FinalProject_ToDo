@@ -5,6 +5,18 @@ spring:
   main:
     banner-mode: off
 
+#  mail:
+#    username: username
+#    password: password
+#    port: 587
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#    host: smtp.gmail.com
+
   security:
     oauth2:
       client:
