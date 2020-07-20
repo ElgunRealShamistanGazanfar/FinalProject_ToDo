@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <title>Welcome Security with Forgot paget!</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body class="container" style="margin:50px">
+
+<div th:each="ud : ${user}">
+    <p class="task-start-time" th:text="${ud.getFullName()}"></p>
+    <p class="task-start-time" th:text="${ud.getPassword()}"></p>
+
+</div>
+</body>
+</html>
