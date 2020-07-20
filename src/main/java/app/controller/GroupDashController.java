@@ -11,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +51,8 @@ public class GroupDashController {
 //        log.info("GET -> /tasks-dashboards");
 //        return "tasks-dashboard";
 //    }
+
+//
+//    PostMapping("send")
+//        public RedirectView chat_post
 }
