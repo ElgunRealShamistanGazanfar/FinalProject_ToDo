@@ -61,7 +61,7 @@
             <h2 class="tasks-caption-title">Dashboard</h2>
             <div class="tasks-caption-actions">
                 <form class="tasks-filter" id="sort-tasks" action="/tasks-dashboard" method="post">
-					<a href="/add-group">Group</a>
+					<a href="/add-group" style="text-decoration: none; color: white; background-color: blue; padding: 10px 10px 10px 10px; border-radius: 10px;">Group</a>
 					<label for="task-type" class="tasks-filter-label">Sort by</label>
 					<select class="tasks-filter-list" name="task-type" id="">
 <!--						<option class="tasks-filter-item" value="deleted">Deleted</option>-->
@@ -102,7 +102,7 @@
                         </a>
                     </li>
                     <li class="page-item" th:classappend="${tasks.number + 10 >= tasks.totalPages} ? 'disabled'">
-                        <a class="page-link svg-icon" th:href="@{/report/table/paged?page={id}(id=${tasks.number + 2})}"
+                        <a class="page-link svg-icon" th:href="@{/tasks-dashboard?page={id}(id=${tasks.number + 2})}"
                            aria-label="Next"
                            title="Next Page" rel="tooltip">
                             <span aria-hidden="true" data-feather="chevrons-right" width="20" height="20">&raquo;</span>

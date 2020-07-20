@@ -2,30 +2,157 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Group Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <script>
+
+        function callIt(myId) {
+            document.getElementById(myId).innerHTML = "complete";
+        }
+
+        function chosen_div(task_id) {
+            document.getElementById("sent_id").value = task_id;
+
+        }
+
+
+    </script>
 </head>
 <body>
-<div id="tbl">
-
-    <p style="color: red" th:text="${grp_msg}"></p><br>
-    <table class="table table-hover ">
-        <thead class="thead-inverse">
-        <tr>
-            <th>ID</th>
-            <th>GroupName</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="member : ${members}">
-            <td th:text="${member.getId()}"></td>
-            <td th:text="${member.getFullName()}"></td>
-            <!--            <td th:text="${group.getUsers_g()}">Members</td>-->
-<!--            <td><a th:href="@{'/join/'+ ${group.getId()}}" style="color: white; text-decoration: none">Join</a></td>-->
-        </tr>
-        </tbody>
-    </table>
 
 
-</div>
+<header class="main-header">
+    <a href="/tasks-dashboard" class="main-header-logo"><img src="/img/iba-tech-logo-white.svg" alt="IBA Tech Academy"></a>
+    <div class="main-header-wrapper">
+        <label class="main-header-search-wrapper">
+            <input type="search" class="main-header-search" placeholder="Search">
+            <img src="/img/search-icon.svg" alt="Search Icon">
+        </label>
+        <div class="main-header-profile-wrapper">
+            <div class="main-header-profile-credentials">
+                <span class="main-header-profile-welcome">Welcome,</span>
+                <span class="main-header-username" th:text="${username}" ></span>
+            </div>
+            <img class="main-header-user-icon" th:src="${profile}" width="64.17" style="border-radius: 30px;" height="70" alt="User Icon">
+            <div class="hidden-accordion-wrapper">
+                <ul class="hidden-accordion">
+                    <li class="hidden-accordion-item"><a href="/tasks-archive" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/archive-icon.svg" alt="User Icon">Archive</a></li>
+                    <li class="hidden-accordion-item"><a href="/tasks-dashboard" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/favourite-icon.svg" alt="Favourite Icon">My tasks</a></li>
+                    <li class="hidden-accordion-item"><a href="/login" class="hidden-accordion-item-link"><img class="hidden-accordion-item-image" src="/img/log-out-icon.svg" alt="Log Out Icon">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="tasks">
+    <div class="container">
+        <div class="tasks-caption">
+            <h2 class="tasks-caption-title">Dashboard</h2>
+            <div class="tasks-caption-actions">
+                <form class="tasks-filter" id="sort-tasks" action="/tasks-dashboard" method="post">
+                    <label for="task-type" class="tasks-filter-label">Sort by</label>
+                    <select class="tasks-filter-list" name="task-type" id="">
+                        <!--						<option class="tasks-filter-item" value="deleted">Deleted</option>-->
+                        <option class="tasks-filter-item" value="available">Sort tasks</option>
+                        <option class="tasks-filter-item" value="overdue">Overdue</option>
+                        <option class="tasks-filter-item" value="today">Today</option>
+                        <option class="tasks-filter-item" value="important">Important</option>
+                        <option class="tasks-filter-item" value="done">Done</option>
+                    </select>
+                    <input type="submit" value="search" style="border-radius: 30px; background-color: #3855E1; color: white; border: none" width="70px" height="55px" >
+                </form>
+
+                <a href="/chat" class="btn btn-dark btn-add-task">Chat</a>
+            </div>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(tasksOfGroup)}">
+            <br>
+            <div class="h3">Student List</div>
+            <br>
+
+            <nav aria-label="Pagination" th:if="${tasksOfGroup.totalPages gt 0}">
+                <ul class="pagination justify-content-center font-weight-medium">
+                    <li class="page-item" th:classappend="${tasksOfGroup.number eq 0} ? 'disabled'">
+                        <a class="page-link svg-icon"
+                           th:href="@{/group-dashboard?page={id}(id=${tasksOfGroup.number lt 1 ? 0 : tasksOfGroup.number-1})}"
+                           aria-label="Previous"
+                           title="Previous Page" rel="tooltip">
+                            <span aria-hidden="true" data-feather="chevrons-left" width="20" height="20">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${i eq tasksOfGroup.number + 1} ? 'active'"
+                        th:each=" i : ${#numbers.sequence(tasksOfGroup.totalPages >= 10 + tasksOfGroup.number ? tasksOfGroup.number + 1 : 1, tasksOfGroup.totalPages > 10 + tasksOfGroup.number ? tasksOfGroup.number + 10 : tasksOfGroup.totalPages, 1)}">
+                        <a class="page-link" th:href="@{/group-dashboard?page={id}(id=${i}-1)}" th:text="${i}"
+                           th:title="${'Page '+ (i)}"
+                           rel="tooltip"></a>
+                    </li>
+                    <li class="page-item disabled" th:if="${tasksOfGroup.number + 10 < tasksOfGroup.totalPages}">
+                        <a class="page-link svg-icon" href="#">
+                            <span data-feather="more-horizontal" width="20" height="20">...</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${tasksOfGroup.number + 10 >= tasksOfGroup.totalPages} ? 'disabled'">
+                        <a class="page-link svg-icon" th:href="@{/group-dashboard?page={id}(id=${tasksOfGroup.number + 2})}"
+                           aria-label="Next"
+                           title="Next Page" rel="tooltip">
+                            <span aria-hidden="true" data-feather="chevrons-right" width="20" height="20">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <div class="tasks-list" th:if="${not #lists.isEmpty(tasksOfGroup)}">
+            <div class="task" th:each="task : ${tasksOfGroup}" th:onclick="|chosen_div('${task.getId()}')|">
+                <h4 class="task-title" id="title" th:text="${task.getTitle()}"></h4>
+                <p class="task-start-time" th:text="${task.getCurr()}"></p>
+                <p class="task-deadline">Deadline to: <span class="task-deadline-date" th:text="${task.getDeadline()}"></span></p>
+                <p class="task-description" id="desc" th:text="${task.getContent()}"></p>
+                <p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status() ? 'complete' : 'incomplete'}"></p>
+            </div>
+        </div>
+
+
+        <div id="tbl">
+
+            <p style="color: red" th:text="${grp_msg}"></p><br>
+            <table class="table table-hover ">
+                <h3>You Group</h3>
+                <thead class="thead-inverse">
+                <tr>
+                    <th>ID</th>
+                    <th>Member</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member : ${members}">
+                    <td th:text="${member.getId()}"></td>
+                    <td th:text="${member.getFullName()}"></td>
+                    <!--            <td th:text="${group.getUsers_g()}">Members</td>-->
+                    <!--            <td><a th:href="@{'/join/'+ ${group.getId()}}" style="color: white; text-decoration: none">Join</a></td>-->
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+
+    </div>
+</section>
 </body>
 </html>

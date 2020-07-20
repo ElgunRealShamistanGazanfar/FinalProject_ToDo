@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -40,13 +41,13 @@ public class MyUser {
     private Set<MyGroup> groups;
 
     @OneToMany(mappedBy = "myUser")
-    private Set<Task> tasks;
+    private List<Task> tasks;
 
     public MyUser() {
     }
 
 
-    public MyUser(String fullName, String username, String email, String password, String roles, Set<Task> tasks) {
+    public MyUser(String fullName, String username, String email, String password, String roles, List<Task> tasks) {
             this.fullName = fullName;
             this.username = username;
             this.email = email;
