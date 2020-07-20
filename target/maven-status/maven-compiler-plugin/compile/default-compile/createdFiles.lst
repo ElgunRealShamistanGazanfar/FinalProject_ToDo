@@ -2,6 +2,7 @@ app\controller\TaskController.class
 app\exception\UserNotFoundEx.class
 app\entity\MyUser.class
 app\service\TaskService.class
+app\repo\GroupRepo.class
 app\controller\UserController.class
 app\exception\TaskNotFoundEx.class
 app\service\Sender.class
@@ -15,13 +16,16 @@ app\config\WebSecurityConfig.class
 app\entity\EmailStatus.class
 app\entity\Mail.class
 app\repo\MyUserRepo.class
+app\service\GroupService.class
 app\auth\ApplicationUserService.class
 app\controller\MailController.class
 app\service\RegisterService.class
 app\AppController.class
 app\entity\Task.class
+app\entity\MyGroup.class
 app\controller\ReportController.class
 app\Runner.class
 app\auth\ApplicationUserDao.class
+app\controller\GroupController.class
 app\service\PaginationService.class
 app\repo\TaskRepo.class
