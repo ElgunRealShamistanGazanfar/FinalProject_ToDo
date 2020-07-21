@@ -25,6 +25,8 @@ public class MyGroup {
     private String groupDesc;
 
 
+    @OneToMany(mappedBy = "myGroup")
+    private List<MyMessage> messages;
 
     @ManyToMany
     @JoinTable(name = "group_user",

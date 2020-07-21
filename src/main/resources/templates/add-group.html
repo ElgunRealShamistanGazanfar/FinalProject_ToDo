@@ -144,6 +144,7 @@
             <td th:text="${myGroup.getId()}"></td>
             <td th:text="${myGroup.getGroupName()}"></td>
             <!--            <td th:text="${group.getUsers_g()}">Members</td>-->
+            <td><a th:href="@{'/chat/'+ ${myGroup.getId()}}" style="color: white; text-decoration: none">Chat</a></td>
             <td><a th:href="@{'/go/'+ ${myGroup.getId()}}" style="color: white; text-decoration: none">Go</a></td>
         </tr>
         </tbody>
