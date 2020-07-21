@@ -24,6 +24,8 @@ public class MyGroup {
     @Column(name = "grp_desc")
     private String groupDesc;
 
+    @Column(name = "isActive")
+    private boolean isActive;
 
     @OneToMany(mappedBy = "myGroup")
     private List<MyMessage> messages;
