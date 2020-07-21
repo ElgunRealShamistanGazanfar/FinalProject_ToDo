@@ -1,12 +1,14 @@
 package app.entity;
 
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@Getter
 @Transactional
 @Entity
 public class MyGroup {
@@ -21,11 +23,13 @@ public class MyGroup {
     @Column(name = "grp_password")
     private String groupPass;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "grp_desc")
     private String groupDesc;
 
-    @Column(name = "isActive")
-    private boolean isActive;
+
 
     @OneToMany(mappedBy = "myGroup")
     private List<MyMessage> messages;
@@ -50,4 +54,6 @@ public class MyGroup {
         this.groupPass= groupPass;
         this.groupDesc= groupDesc;
     }
+
+
 }
