@@ -29,6 +29,7 @@ public class MyMessage {
     @Column(name = "group_id")
     private int group_id;
 
+
     @Column(name = "sender_name")
     private String sender_name;
 

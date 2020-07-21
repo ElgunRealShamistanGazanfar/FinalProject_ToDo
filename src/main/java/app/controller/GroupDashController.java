@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.entity.Task;
-import app.service.MessageService;
 import app.service.PaginationService;
 import app.service.RegisterService;
 import app.service.TaskService;
@@ -36,9 +35,6 @@ public class GroupDashController {
     @Autowired
     TaskService taskService;
 
-    @Autowired
-    MessageService messageService;
-
 
     @GetMapping("chat")
     public String chat_get(){
@@ -47,33 +43,12 @@ public class GroupDashController {
     }
     @GetMapping("chat/{groupId}")
     public String chat_get2(@PathVariable int groupId, Model model, HttpServletResponse response){
-        messageService.getMessages(groupId, model);
 
-        // i will use it to know which chat i am in
-        model.addAttribute("groupId", groupId);
-        Cookie cookie = new Cookie("groupId",String.valueOf(groupId));
-        response.addCookie(cookie);
+
         return "chat";
 
     }
 
-    @PostMapping("sendMessage")
-    public String chat_post(Model model, @RequestParam("msg_text") String msg_text,
-                            HttpServletRequest request){
-
-        final Cookie[] cookies = request.getCookies();
-        int groupId = -999;
-        for(Cookie cookie : cookies){
-            if (cookie.getName().equals("groupId")){
-                groupId =  Integer.parseInt(cookie.getValue());
-            }
-        }
-
-        messageService.send(groupId, msg_text);
-        model.addAttribute("messages", messageService.fetchAllByGroupId(groupId));
-        return "chat";
-
-    }
 //    @GetMapping("group-dashboard")
 //    public String handle_get1(
 //            Model model,
