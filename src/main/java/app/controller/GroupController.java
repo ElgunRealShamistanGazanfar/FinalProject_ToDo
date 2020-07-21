@@ -77,6 +77,16 @@ public class GroupController {
         model.addAttribute("members",allByGroups);
 
         log.info(String.format("Go to the group with id %d", groupId));
+        final List<MyGroup> my_groups = registerService.logged_user().get().getGroups();
+
+        for(MyGroup group : my_groups){
+            if (group.getId()==groupId){
+                group.setStatus("active");
+            }
+            else {
+                group.setStatus("inactive");
+            }
+        }
 
 
         final Page<Task> tasksOfGroup = groupDashService.fetchTasksByGroupId(pageable, groupId);
