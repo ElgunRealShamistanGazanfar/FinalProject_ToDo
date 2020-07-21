@@ -18,7 +18,7 @@ public interface GroupRepo extends JpaRepository<MyGroup, Integer> {
 
     Optional<MyGroup> findById(int id);
 
-
     Optional<MyGroup> deleteById(int id);
+
 
 }

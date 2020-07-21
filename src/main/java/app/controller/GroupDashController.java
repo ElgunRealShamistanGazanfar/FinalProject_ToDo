@@ -1,10 +1,13 @@
 package app.controller;
 
 import app.entity.MyGroup;
+import app.entity.MyMessage;
 import app.entity.MyUser;
 import app.repo.GroupRepo;
+import app.repo.MessageRepo;
 import app.repo.MyUserRepo;
 import app.service.GroupDashService;
+import app.service.MessageService;
 import app.service.RegisterService;
 import app.service.TaskService;
 import lombok.extern.log4j.Log4j2;
@@ -27,10 +30,16 @@ public class GroupDashController {
     RegisterService registerService;
 
     @Autowired
+    MessageService messageService;
+
+    @Autowired
     GroupDashService groupDashService;
 
     @Autowired
     GroupRepo groupRepo;
+
+    @Autowired
+    MessageRepo messageRepo;
 
     @Autowired
     MyUserRepo myUserRepo;
@@ -46,9 +55,22 @@ public class GroupDashController {
     }
     @GetMapping("chat/{groupId}")
     public String chat_get2(@PathVariable int groupId, Model model, HttpServletResponse response){
-
+        final List<MyMessage> messages = messageRepo.findAllByMyGroup_Id(groupId);
+        model.addAttribute("messages", messages);
 
         return "chat";
+
+    }
+
+    @PostMapping("sendMessage")
+    public String send_mes(@RequestParam("msg_text")String msg_txt, Model model){
+
+        int groupId = registerService.logged_user().get().getGroups().stream().filter(g->g.getStatus().equals("active")).findAny().get().getId();
+            messageService.send(groupId, msg_txt);
+
+        final List<MyMessage> messages = messageRepo.findAllByMyGroup_Id(groupId);
+        model.addAttribute("messages", messages);
+            return "chat";
 
     }
 

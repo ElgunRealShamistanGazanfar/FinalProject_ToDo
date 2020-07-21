@@ -1,9 +1,11 @@
 package app.service;
 
 import app.entity.MyGroup;
+import app.entity.MyMessage;
 import app.entity.MyUser;
 import app.entity.Task;
 import app.repo.GroupRepo;
+import app.repo.MessageRepo;
 import app.repo.MyUserRepo;
 import app.repo.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class GroupDashService {
     private final MyUserRepo myUserRepo;
 
     @Autowired
+    private final MessageRepo messageRepo;
+
+    @Autowired
     private final TaskRepo taskRepo;
 
     @Autowired
@@ -36,9 +41,10 @@ public class GroupDashService {
     @Autowired
     private final RegisterService registerService;
 
-    public GroupDashService(TaskService taskService, MyUserRepo myUserRepo, TaskRepo taskRepo, GroupRepo groupRepo, RegisterService registerService) {
+    public GroupDashService(TaskService taskService, MyUserRepo myUserRepo, MessageRepo messageRepo, TaskRepo taskRepo, GroupRepo groupRepo, RegisterService registerService) {
         this.taskService = taskService;
         this.myUserRepo = myUserRepo;
+        this.messageRepo = messageRepo;
         this.taskRepo = taskRepo;
         this.groupRepo = groupRepo;
         this.registerService = registerService;
@@ -107,5 +113,6 @@ public class GroupDashService {
         Page<Task> res =new PageImpl<Task>(pg,pageable, pg.size());
         return res;
     }
+
 
 }
