@@ -1,11 +1,15 @@
 package app.service;
 
 
+import app.entity.MyUser;
 import app.entity.Task;
+import app.exception.TaskNotFoundEx;
 import app.repo.TaskRepo;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,7 +40,7 @@ public class TaskService {
     }
 
     public Collection<Task> fetchAll(int loggedUser_id) {
-        return taskRepo.findAll().stream().filter(t->t.getUsers().getId()==loggedUser_id).collect(Collectors.toList());
+        return taskRepo.findAll().stream().filter(t->t.getMyUser().getId()==loggedUser_id).collect(Collectors.toList());
     }
 
     public Optional<Task> findTaskById(int id) {
@@ -124,11 +128,17 @@ public class TaskService {
 
     }
 
-    public void updateTitleAndDate(int id, java.sql.Date edited_date, String edited_title) {
+    public Page<Task> getTaskListPaged(MyUser myUser, Pageable pageable) {
+        Page<Task> tasks = taskRepo.findAllByMyUser(myUser,pageable);
 
+        return tasks;
+    }
+
+
+    public void updateTitleAndDate(int id, java.sql.Date edited_date, String edited_title) {
         Optional<Task> taskById = findTaskById(id);
         taskRepo.deleteById(id);
-        Task tsk  = taskById.get();
+        Task tsk  = taskById.orElseThrow(TaskNotFoundEx::new);
         tsk.setTitle(edited_title);
         tsk.setDeadline(edited_date);
         taskRepo.save(tsk);

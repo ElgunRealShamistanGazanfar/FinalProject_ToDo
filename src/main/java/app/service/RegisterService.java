@@ -1,7 +1,6 @@
 package app.service;
 
-import app.entity.Task;
-import app.entity.Users;
+import app.entity.MyUser;
 import app.repo.MyUserRepo;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,22 +30,22 @@ public class RegisterService {
 
 
     public boolean hasUsed(String email){
-        List<Users> all = myUserRepo.findAll();
-        List<String> collect = all.stream().map(Users::getEmail).collect(Collectors.toList());
+        List<MyUser> all = myUserRepo.findAll();
+        List<String> collect = all.stream().map(MyUser::getEmail).collect(Collectors.toList());
         return collect.contains(email);
     }
 
     public boolean isCorrect(String fullname, String email){
-        Optional<Users> allByFullNameAndEmail = myUserRepo.getAllByFullNameAndEmail(fullname, email);
+        Optional<MyUser> allByFullNameAndEmail = myUserRepo.getAllByFullNameAndEmail(fullname, email);
         return allByFullNameAndEmail.isPresent();
     }
 
-    public Optional<Users> giveMeUser(String fullname, String email){
-        Optional<Users> allByFullNameAndEmail = myUserRepo.getAllByFullNameAndEmail(fullname, email);
+    public Optional<MyUser> giveMeUser(String fullname, String email){
+        Optional<MyUser> allByFullNameAndEmail = myUserRepo.getAllByFullNameAndEmail(fullname, email);
         return allByFullNameAndEmail;
     }
 
-    public Optional<Users> logged_user(){
+    public Optional<MyUser> logged_user(){
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails) principal).getUsername();
@@ -56,7 +55,7 @@ public class RegisterService {
 
     // Save image to a DB
     @SneakyThrows
-    public void addProfileAndSaveToDB(Users user, MultipartFile imageFile) {
+    public void addProfileAndSaveToDB(MyUser user, MultipartFile imageFile) {
 
         try {
             byte [] byteObj = new byte[imageFile.getBytes().length];

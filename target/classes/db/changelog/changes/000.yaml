@@ -1,0 +1,265 @@
+databaseChangeLog:
+- changeSet:
+    id: 1595245608584-1
+    author: shami (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: users_pkey
+            name: usr_id
+            type: BIGINT
+        - column:
+            name: email
+            type: VARCHAR(255)
+        - column:
+            name: full_name
+            type: VARCHAR(255)
+        - column:
+            name: password
+            type: VARCHAR(255)
+        - column:
+            name: profile
+            type: OID
+        - column:
+            name: roles
+            type: VARCHAR(255)
+        - column:
+            name: username
+            type: VARCHAR(255)
+        tableName: users
+- changeSet:
+    id: 1595245608584-2
+    author: shami (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: task_pkey
+            name: tsk_id
+            type: INTEGER
+        - column:
+            name: tsk_complement_status
+            type: BOOLEAN
+        - column:
+            name: tsk_content
+            type: VARCHAR(255)
+        - column:
+            name: tsk_curr
+            type: date
+        - column:
+            name: tsk_deadline
+            type: date
+        - column:
+            name: image
+            type: OID
+        - column:
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: tsk_title
+            type: VARCHAR(255)
+        tableName: task
+- changeSet:
+    id: 1595245608584-3
+    author: shami (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: user_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: tsk_user_pkey
+            name: tsk_id
+            type: INTEGER
+        tableName: tsk_user
+- changeSet:
+    id: 1595245608584-4
+    author: shami (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: my_group_pkey
+            name: grp_id
+            type: INTEGER
+        - column:
+            name: grp_name
+            type: VARCHAR(255)
+        - column:
+            name: grp_password
+            type: VARCHAR(255)
+        - column:
+            name: grp_desc
+            type: VARCHAR(255)
+        tableName: my_group
+- changeSet:
+    id: 1595245608584-5
+    author: shami (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: grp_id
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: BIGINT
+        tableName: group_user
+- changeSet:
+    id: 1595245608584-6
+    author: shami (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: my_user_pkey
+            name: usr_id
+            type: BIGINT
+        - column:
+            name: email
+            type: VARCHAR(255)
+        - column:
+            name: full_name
+            type: VARCHAR(255)
+        - column:
+            name: password
+            type: VARCHAR(255)
+        - column:
+            name: profile
+            type: OID
+        - column:
+            name: roles
+            type: VARCHAR(255)
+        - column:
+            name: username
+            type: VARCHAR(255)
+        tableName: my_user
+- changeSet:
+    id: 1595245608584-7
+    author: shami (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: tsk_id
+        baseTableName: tsk_user
+        constraintName: fkajb7k23725yenufbua9v6mhl8
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: tsk_id
+        referencedTableName: task
+        validate: true
+- changeSet:
+    id: 1595245608584-8
+    author: shami (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: tsk_user
+        constraintName: fkobmf7oli0240qap69ytsyhcq3
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: usr_id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1595245608584-9
+    author: shami (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: grp_id
+        baseTableName: group_user
+        constraintName: fk5iv46cvk2pysd1ldpehlt7iq9
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: grp_id
+        referencedTableName: my_group
+        validate: true
+- changeSet:
+    id: 1595245608584-10
+    author: shami (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: group_user
+        constraintName: fkrqeo92wyuy7jcc54mfbln3wme
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: usr_id
+        referencedTableName: users
+        validate: true
+- changeSet:
+    id: 1595245608584-11
+    author: shami (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: tsk_user
+        constraintName: fk2ujmkvqv385jvcaxb4pwcbthf
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: usr_id
+        referencedTableName: my_user
+        validate: true
+- changeSet:
+    id: 1595245608584-12
+    author: shami (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: group_user
+        constraintName: fkmpugformb6ri6v0u7s6gh9ip2
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: usr_id
+        referencedTableName: my_user
+        validate: true
+- changeSet:
+    id: 1595245608584-13
+    author: shami (generated)
+    changes:
+    - createSequence:
+        cacheSize: 1
+        cycle: false
+        dataType: bigint
+        incrementBy: 1
+        maxValue: 9223372036854775807
+        minValue: 1
+        sequenceName: users_id_seq
+        startValue: 1
+

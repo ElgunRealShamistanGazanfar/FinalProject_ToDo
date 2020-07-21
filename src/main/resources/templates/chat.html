@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: 100%; border: 2px solid blue; height: 80%; border-radius: 20px;">
+<div  th:each="message : ${messages}">
+
+    <p th:text="${message.getSender_name()}" style="background-color: blue; margin-left: 10px; color: white; border-radius: 30px; width: 100px; padding: 6px 6px 6px 6px"></p>
+    <p th:text="${message.getMsg_text()}" style="margin-left: 10px; border-radius: 30px; border: 2px solid blue; width: 150px; padding: 6px 6px 6px 6px"></p>
+
+</div>
+</div>
+
+<form style="margin-top: 630px; position: fixed;" action="/sendMessage" method="post">
+    <input type="text" name="msg_text" style="width: 1500px; height: 40px; border-radius: 40px; margin-left: 10px; border: 2px solid blue;" placeholder=" Type Something">
+    <input type="submit" style="width: 100px; height: 40px; border-radius: 40px; border: none; color: white; background-color: #3855E1;" value="Send">
+</form>
+
+</body>
+</html>

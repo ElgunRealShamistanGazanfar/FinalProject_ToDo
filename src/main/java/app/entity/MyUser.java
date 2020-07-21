@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @Entity
-public class Users {
+public class MyUser {
 
 
     @Id
@@ -36,17 +37,17 @@ public class Users {
     @Column(name = "roles")
     private String roles;
 
+    @ManyToMany(mappedBy = "users_g")
+    private Set<MyGroup> groups;
 
+    @OneToMany(mappedBy = "myUser")
+    private List<Task> tasks;
 
-
-    @OneToMany(mappedBy = "users")
-    private Set<Task> tasks;
-
-    public Users() {
+    public MyUser() {
     }
 
 
-    public Users(String fullName, String username, String email, String password, String roles, Set<Task> tasks) {
+    public MyUser(String fullName, String username, String email, String password, String roles, List<Task> tasks) {
             this.fullName = fullName;
             this.username = username;
             this.email = email;
@@ -55,7 +56,7 @@ public class Users {
             this.tasks=tasks;
     }
 
-    public Users(String fullname, String username, String email, String password, String roles) {
+    public MyUser(String fullname, String username, String email, String password, String roles) {
         this.fullName = fullname;
         this.username = username;
         this.email = email;
