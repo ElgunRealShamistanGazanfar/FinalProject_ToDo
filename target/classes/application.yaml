@@ -40,9 +40,7 @@ spring:
       ddl-auto: update
     show-sql: true
 #
-#  liquibase:
-#    enabled: true
-#    change-log: classpath:/db/changelog/master.yaml
+
 
 
 
