@@ -1,7 +1,7 @@
 # production database
-url: jdbc:postgresql://ec2-54-236-146-234.compute-1.amazonaws.com:5432/dc6lcoc9e0bkhd
-username: wtlfvskdqwambl
-password: 1a818c5c9887a41608c7526df7617622360b1a72e63e803a26e2e0f050a82c57
+url: ${JDBC_DATABASE_URL}
+username: ${JDBC_DATABASE_USERNAME}
+password: ${JDBC_DATABASE_PASSWORD}
 
 # development database
 referenceUrl: jdbc:postgresql://localhost:5432/postgres
