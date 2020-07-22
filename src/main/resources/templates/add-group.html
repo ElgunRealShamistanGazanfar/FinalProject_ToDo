@@ -15,7 +15,7 @@
             height: 100px;
             background-color: #3855E1;
             width: 100%;
-            margin-bottom: 90px;
+            margin-bottom: 60px;
 
         }
         #cr{
@@ -67,8 +67,9 @@
 
 
         #tbl{
-            margin-top: 100px;
-            margin-left: 20px;
+
+            margin:  auto;
+            width: 600px;
 
         }
         #tbl table{
@@ -76,6 +77,13 @@
            background-color: #3855E1;
             border-radius: 40px;
             color: white;
+        }
+
+        #footer{
+            margin-top: 16vh;
+            width: 100%;
+            background-color: #3855E1;
+            height: 68px;
         }
 
 
@@ -99,7 +107,8 @@
 <!--        </div>-->
 <!--    </div>-->
 </div>
-
+<center><h1 style="margin-bottom: 60px; color: #3855E1; font-size: 60px; text-shadow: 3px 3px 3px gray">Welcome to Group Page</h1></center>
+<h1 style="margin-left: 155vh;color: #3855E1">Your groups</h1>
 <div style="display: flex">
 
     <form action="/create-group" method="post" id="cr">
@@ -126,9 +135,11 @@
     <input style="color: #3855E1; cursor: pointer; background-color: white; border: none; border-radius: 3px" type="submit">
 
     </center>
+
 </form>
 
     <table class="table table-hover " id="myGroup" style="margin-left: 5%">
+
         <thead class="thead-inverse">
 
 
@@ -136,6 +147,7 @@
 
             <th>ID</th>
             <th>GroupName</th>
+            <th>Chat</th>
             <th>Go</th>
         </tr>
         </thead>
@@ -189,6 +201,10 @@
         </tbody>
     </table>
 
+
+</div>
+
+<div id="footer">
 
 </div>
 </body>
