@@ -27,14 +27,15 @@ spring:
 
 
 
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: sh7513244
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
   #    initialization-mode: always
 
   jpa:
-    generate-ddl: false
+    generate-ddl: true
     hibernate:
       ddl-auto: update
     show-sql: true
