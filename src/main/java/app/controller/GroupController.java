@@ -79,6 +79,10 @@ public class GroupController {
         log.info(String.format("Go to the group with id %d", groupId));
         final List<MyGroup> my_groups = registerService.logged_user().get().getGroups();
 
+        String username = registerService.logged_user().get().getFullName();
+        model.addAttribute("username", username);
+        registerService.addProfile(model);
+
         for(MyGroup group : my_groups){
             if (group.getId()==groupId){
                 group.setStatus("active");

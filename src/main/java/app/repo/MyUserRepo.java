@@ -14,6 +14,10 @@ import java.util.Optional;
 public interface MyUserRepo extends JpaRepository<MyUser, Integer> {
 
     Optional<MyUser> findByUsername(String username);
+
+    Optional<MyUser> deleteAllByGroups(MyGroup mygroup);
     Optional<MyUser> getAllByFullNameAndEmail(String fullname, String email);
     List<MyUser> findAllByGroups(MyGroup myGroup);
+
+
 }

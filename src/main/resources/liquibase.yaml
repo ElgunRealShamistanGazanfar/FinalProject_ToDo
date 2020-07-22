@@ -1,12 +1,12 @@
 # production database
-url: ${JDBC_DATABASE_URL}
-username: ${JDBC_DATABASE_USERNAME}
-password: ${JDBC_DATABASE_PASSWORD}
+url: jdbc:postgresql://localhost:5432/postgres
+username: postgres
+password: sh7513244
 
 # development database
-referenceUrl: jdbc:postgresql://localhost:5432/postgres
-referenceUsername: postgres
-referencePassword: sh7513244
+referenceUrl: ${JDBC_DATABASE_URL}
+referenceUsername: ${JDBC_DATABASE_USERNAME}
+referencePassword: ${JDBC_DATABASE_PASSWORD}
 
 # for diff/update
 changeLogFile: src/main/resources/db/changelog/master.yaml

@@ -6,11 +6,13 @@ import app.repo.GroupRepo;
 import app.repo.MyUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.Arrays;
 
 @Service
+@Transactional
 public class GroupService {
 
     @Autowired
@@ -34,15 +36,13 @@ public class GroupService {
 
         MyUser logged_user = registerService.logged_user().get();
         if (!groupById.getUsers_g().contains(logged_user)){
-            MyGroup myGroup = new MyGroup(groupById.getGroupName(), groupById.getGroupPass(), groupById.getGroupDesc());
+                groupById.getUsers_g().add(logged_user);
+                groupRepo.save(groupById);
 
-            myGroup.setUsers_g(Arrays.asList(logged_user));
-            groupRepo.save(myGroup);
         }else {
            model.addAttribute("grp_msg", "You are already in this team");
         }
 
-        groupRepo.deleteById(id);
 
     }
 
