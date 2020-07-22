@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Crazy" />
+        <module name="FinalProject_ToDo_Master" />
         <module name="norel" />
+        <module name="Crazy" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +20,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Crazy" options="-parameters" />
       <module name="FinalProject_ToDo" options="-parameters" />
+      <module name="FinalProject_ToDo_Master" options="-parameters" />
       <module name="norel" options="-parameters" />
     </option>
   </component>
