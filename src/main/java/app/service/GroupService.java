@@ -43,7 +43,6 @@ public class GroupService {
            model.addAttribute("grp_msg", "You are already in this team");
         }
 
-
     }
 
 
