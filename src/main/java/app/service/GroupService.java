@@ -34,15 +34,12 @@ public class GroupService {
 
         MyUser logged_user = registerService.logged_user().get();
         if (!groupById.getUsers_g().contains(logged_user)){
-            MyGroup myGroup = new MyGroup(groupById.getGroupName(), groupById.getGroupPass(), groupById.getGroupDesc());
+            groupById.getUsers_g().add(logged_user);
+            groupRepo.save(groupById);
 
-            myGroup.setUsers_g(Arrays.asList(logged_user));
-            groupRepo.save(myGroup);
         }else {
-           model.addAttribute("grp_msg", "You are already in this team");
+            model.addAttribute("grp_msg", "You are already in this team");
         }
-
-        groupRepo.deleteById(id);
 
     }
 
