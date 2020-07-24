@@ -83,12 +83,7 @@ public class DashController {
         return new RedirectView("/tasks-dashboard");
 
     }
-        @GetMapping("/error")
-        public String error(){
-        log.error("Get -> /error");
-        return "error";
 
-        }
 
 
 
