@@ -71,7 +71,7 @@ public class GroupDashService {
 
     public Boolean isDone(int task_id) {
         Optional<Task> byId = this.findTaskById(task_id);
-        return byId.orElse(new Task(false)).getComplement_status();
+        return byId.orElse(new Task(false)).getComplete();
 
     }
 

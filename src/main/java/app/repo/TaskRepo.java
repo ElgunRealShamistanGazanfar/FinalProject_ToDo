@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,12 @@ import java.util.Optional;
 @Transactional
 public interface TaskRepo extends JpaRepository<Task, Integer> {
 
-    Page<Task> findAllByMyUser(MyUser myUser, Pageable page);
-            
+    Page<Task> findAllByMyUser( MyUser myUser, Pageable page);
+    Page<Task> findAll(Pageable page);
+    Page<Task> findAllByDeadline(Date date, Pageable page);
+    Page<Task> findAllByStatus(String status,Pageable page);
+    Page<Task> findAllByDeadlineAfter(Date date, Pageable page);
+    Page<Task> findAllByComplete(boolean bool, Pageable pageable);
+
 
 }

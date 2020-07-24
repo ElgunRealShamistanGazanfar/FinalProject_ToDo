@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,7 +66,7 @@ public class ReportController {
     }
 
     @PostMapping("tasks-dashboard")
-    public String handle_post1(@RequestParam("task-type") String tsk_status, Model model,Pageable pageable) {
+    public String handle_post1(@RequestParam("task-type") String tsk_status, Model model, Pageable pageable) {
          int LoggedUserId=(int) registerService.logged_user().get().getId();
         log.info("POST -> /tasks-dashboards ->" + tsk_status);
         String username = registerService.logged_user().get().getFullName();
