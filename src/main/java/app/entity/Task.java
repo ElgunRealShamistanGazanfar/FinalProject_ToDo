@@ -42,7 +42,7 @@ public class Task {
     private String status;
 
     @Column(name = "tsk_complement_status")
-    private Boolean complement_status;
+    private Boolean complete;
 
 
     @ManyToOne
@@ -61,17 +61,17 @@ public class Task {
     public Task(){
 
     }
-    public Task(String title, Date deadline,  LocalDate curr,String status, String content, Boolean complement_status, MyUser myUser) {
+    public Task(String title, Date deadline,  LocalDate curr,String status, String content, Boolean complete, MyUser myUser) {
         this.title = title;
         this.deadline = deadline;
         this.curr = curr;
         this.content = content;
         this.status = status;
-        this.complement_status = complement_status;
+        this.complete = complete;
         this.myUser = myUser;
     }
-    public Task(Boolean complement_status){
-        this.complement_status = complement_status;
+    public Task(Boolean complete){
+        this.complete = complete;
     }
 
 
@@ -84,7 +84,7 @@ public class Task {
                 ", curr='" + curr + '\'' +
                 ", content='" + content + '\'' +
                 ", status='" + status + '\'' +
-                ", complement_status='" + complement_status + '\'' +
+                ", complete='" + complete + '\'' +
                 '}';
     }
 }
