@@ -17,13 +17,6 @@ spring:
   #            enable: true
   #    host: smtp.gmail.com
 
-  security:
-    oauth2:
-      client:
-        registration:
-          facebook:
-            clientId: 637974700259597
-            clientSecret: 1229f0f12ea8fdf246b7a7e73ca56265
 
 
 

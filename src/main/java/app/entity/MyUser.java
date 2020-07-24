@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Set;
 
@@ -19,9 +21,11 @@ public class MyUser {
     private long id;
 
     @Column(name = "full_name")
+    @NotBlank
     private String fullName;
 
     @Column(name = "username")
+    @Email
     private String username;
 
     @Column(name = "profile")
