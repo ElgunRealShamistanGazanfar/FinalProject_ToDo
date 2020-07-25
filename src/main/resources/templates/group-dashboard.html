@@ -120,7 +120,7 @@
                 <p class="task-start-time" th:text="${task.getCurr()}"></p>
                 <p class="task-deadline">Deadline to: <span class="task-deadline-date" th:text="${task.getDeadline()}"></span></p>
                 <p class="task-description" id="desc" th:text="${task.getContent()}"></p>
-                <p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status() ? 'complete' : 'incomplete'}"></p>
+                <p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplete() ? 'complete' : 'incomplete'}"></p>
             </div>
         </div>
 
