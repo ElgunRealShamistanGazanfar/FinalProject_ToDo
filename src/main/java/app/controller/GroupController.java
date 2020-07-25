@@ -46,14 +46,14 @@ public class GroupController {
 
     @GetMapping("add-group")
     public String handle_get_group(Model model) {
-        model.addAttribute("myGroups", registerService.logged_user().get().getGroups());
+        model.addAttribute("myGroups", registerService.logged_user().getGroups());
         log.info("GET -> /add-group");
         return "add-group";
     }
     @PostMapping("search-group")
     public String handle_post_search(@RequestParam("group")String groupName, Model model) {
         List<MyGroup> groups = groupRepo.findAllByGroupNameIsLike(groupName);
-        model.addAttribute("myGroups", registerService.logged_user().get().getGroups());
+        model.addAttribute("myGroups", registerService.logged_user().getGroups());
             model.addAttribute("groups", groups);
         log.info("Post -> /search-group");
 
@@ -64,7 +64,7 @@ public class GroupController {
     @GetMapping("join/{id}")
     public String join_group(@PathVariable int id, Model model){
         groupService.AddUserToGroup(id, model);
-        model.addAttribute("myGroups", registerService.logged_user().get().getGroups());
+        model.addAttribute("myGroups", registerService.logged_user().getGroups());
         log.info(String.format("You joined to the group with id %d", id));
         return "add-group";
 
@@ -77,9 +77,9 @@ public class GroupController {
         model.addAttribute("members",allByGroups);
 
         log.info(String.format("Go to the group with id %d", groupId));
-        final List<MyGroup> my_groups = registerService.logged_user().get().getGroups();
+        final List<MyGroup> my_groups = registerService.logged_user().getGroups();
 
-        String username = registerService.logged_user().get().getFullName();
+        String username = registerService.logged_user().getFullName();
         model.addAttribute("username", username);
         registerService.addProfile(model);
 
@@ -104,7 +104,7 @@ public class GroupController {
     @PostMapping("create-group")
     public String handle_post_create(@RequestParam("groupName")String groupName, @RequestParam("groupPass")String groupPass, @RequestParam("groupDesc")String groupDesc,Model model) {
        groupService.createGroup(groupName,groupPass, groupDesc);
-        model.addAttribute("myGroups", registerService.logged_user().get().getGroups());
+        model.addAttribute("myGroups", registerService.logged_user().getGroups());
       //  model.addAttribute("createMes", String.format("You have successfully created %s group, with description %s", groupName, groupDesc));
         log.info("Post -> /create-group");
 

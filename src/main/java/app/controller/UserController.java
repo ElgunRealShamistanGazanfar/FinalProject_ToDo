@@ -48,46 +48,43 @@ public class UserController {
 
 
     @GetMapping("showProfile")
-    public void showProfileDB( HttpServletResponse response) throws IOException {
+    public void showProfileDB(HttpServletResponse response) throws IOException {
 
-        Optional<MyUser> res = registerService.logged_user();
+        MyUser user = registerService.logged_user();
 
-        if (res.isPresent()) {
-            MyUser user = res.get();
+        if (user.getProfile() != null) {
+            byte[] byteArray = new byte[user.getProfile().length];
 
-            if (user.getProfile() != null) {
-                byte[] byteArray = new byte[user.getProfile().length];
-
-                int i = 0;
-                for (Byte imgByte : user.getProfile()) {
-                    byteArray[i++] = imgByte;
-                }
-                response.setContentType("image/jpeg");
-                InputStream is = new ByteArrayInputStream(byteArray);
-                IOUtils.copy(is, response.getOutputStream());
+            int i = 0;
+            for (Byte imgByte : user.getProfile()) {
+                byteArray[i++] = imgByte;
             }
+            response.setContentType("image/jpeg");
+            InputStream is = new ByteArrayInputStream(byteArray);
+            IOUtils.copy(is, response.getOutputStream());
         }
+
     }
 
-        //afteer login page it comes
+    //afteer login page it comes
     @GetMapping("landing")
     public String handle_get2(Model model) {
         Task random_task = new Task();
 
-        long logged_user_id = registerService.logged_user().get().getId();
-        List<Task> all = (List<Task>) taskService.fetchAll((int)logged_user_id);
-        if (!all.isEmpty()){
-          random_task = all.get((int) (Math.random() * all.size()));
-        }else {
+        long logged_user_id = registerService.logged_user().getId();
+        List<Task> all = (List<Task>) taskService.fetchAll((int) logged_user_id);
+        if (!all.isEmpty()) {
+            random_task = all.get((int) (Math.random() * all.size()));
+        } else {
             random_task.setContent("GO Dashboard to add new tasks");
             random_task.setTitle("No Task");
         }
 
-        model.addAttribute("username", registerService.logged_user().get().getFullName());
+        model.addAttribute("username", registerService.logged_user().getFullName());
         model.addAttribute("title", random_task.getTitle());
         model.addAttribute("content", random_task.getContent());
 
-       registerService.addProfile(model);
+        registerService.addProfile(model);
         log.info("GET -> /landing");
         return "landing";
     }
@@ -99,7 +96,6 @@ public class UserController {
         log.info("Post -> /landing");
         return "landing";
     }
-
 
 
 }

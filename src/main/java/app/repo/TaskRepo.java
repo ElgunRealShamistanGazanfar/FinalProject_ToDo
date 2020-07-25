@@ -21,13 +21,15 @@ import java.util.Optional;
 public interface TaskRepo extends JpaRepository<Task, Integer> {
 
     Page<Task> findAllByMyUser(MyUser myUser, Pageable page);
-    Page<Task> findAll(Pageable page);
-    Page<Task> findAllByDeadline(Date date, Pageable page);
-    Page<Task> findAllByStatus(String status,Pageable page);
-    Page<Task> findAllByDeadlineAfter(Date date, Pageable page);
-    Page<Task> findAllByComplete(boolean bool,Pageable page);
 
+    // Page<Task> findAll(Pageable page);
+    Page<Task> findAllByDeadlineAndMyUser(Date date, MyUser myUser, Pageable page);
 
-            
+    Page<Task> findAllByStatusAndMyUser(String status, MyUser myUser, Pageable page);
+
+    Page<Task> findAllByDeadlineAfterAndMyUser(Date date, MyUser myUser, Pageable page);
+
+    Page<Task> findAllByCompleteAndMyUser(boolean bool, MyUser myUser, Pageable page);
+
 
 }

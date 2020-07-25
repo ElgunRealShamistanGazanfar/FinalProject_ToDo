@@ -37,16 +37,13 @@ public class MessageService {
     }
 
 
-
-
-
     public void send(int groupId, String msg_txt) {
         MyMessage myMessage = new MyMessage();
 
         final MyGroup myGroup = groupRepo.findById(groupId).get();
         myMessage.setMsg_text(msg_txt);
-        myMessage.setSender_name(registerService.logged_user().get().getFullName());
-        myMessage.setSender_id((int)registerService.logged_user().get().getId());
+        myMessage.setSender_name(registerService.logged_user().getFullName());
+        myMessage.setSender_id((int) registerService.logged_user().getId());
         myMessage.setGroup_id(groupId);
         myGroup.setMessages(Arrays.asList(myMessage));
         myMessage.setMyGroup(myGroup);

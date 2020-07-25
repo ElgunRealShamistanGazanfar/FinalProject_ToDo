@@ -49,12 +49,13 @@ public class GroupDashController {
 
 
     @GetMapping("chat")
-    public String chat_get(){
+    public String chat_get() {
         return "chat";
 
     }
+
     @GetMapping("chat/{groupId}")
-    public String chat_get2(@PathVariable int groupId, Model model, HttpServletResponse response){
+    public String chat_get2(@PathVariable int groupId, Model model, HttpServletResponse response) {
         final List<MyMessage> messages = messageRepo.findAllByMyGroup_Id(groupId);
         model.addAttribute("messages", messages);
 
@@ -63,62 +64,62 @@ public class GroupDashController {
     }
 
     @PostMapping("sendMessage")
-    public String send_mes(@RequestParam("msg_text")String msg_txt, Model model){
+    public String send_mes(@RequestParam("msg_text") String msg_txt, Model model) {
 
-        int groupId = registerService.logged_user().get().getGroups().stream().filter(g->g.getStatus().equals("active")).findAny().get().getId();
-            messageService.send(groupId, msg_txt);
+        int groupId = registerService.logged_user().getGroups().stream().filter(g -> g.getStatus().equals("active")).findAny().get().getId();
+        messageService.send(groupId, msg_txt);
 
         final List<MyMessage> messages = messageRepo.findAllByMyGroup_Id(groupId);
         model.addAttribute("messages", messages);
-            return "chat";
+        return "chat";
 
     }
 
 
     @PostMapping("group-dashboard")
-    public String handle_post1(@RequestParam("task-type") String tsk_status, Model model,Pageable pageable) {
-        int LoggedUserId=(int) registerService.logged_user().get().getId();
+    public String handle_post1(@RequestParam("task-type") String tsk_status, Model model, Pageable pageable) {
+        int LoggedUserId = (int) registerService.logged_user().getId();
 
-        String username = registerService.logged_user().get().getFullName();
-        int groupId = registerService.logged_user().get().getGroups().stream().filter(g->g.getStatus().equals("active")).findAny().get().getId();
-        log.info(String.format("POST -> /group-dashboards -> %s in group with id : %d",  tsk_status,groupId));
+        String username = registerService.logged_user().getFullName();
+        int groupId = registerService.logged_user().getGroups().stream().filter(g -> g.getStatus().equals("active")).findAny().get().getId();
+        log.info(String.format("POST -> /group-dashboards -> %s in group with id : %d", tsk_status, groupId));
         MyGroup myGroup = groupRepo.findById(groupId).get();
         List<MyUser> allByGroups = myUserRepo.findAllByGroups(myGroup);
-        model.addAttribute("members",allByGroups);
+        model.addAttribute("members", allByGroups);
 
         registerService.addProfile(model);
 
-        switch (tsk_status){
+        switch (tsk_status) {
             case "overdue":
-                model.addAttribute("tasksOfGroup", groupDashService.pageForOverdue(pageable,groupId));
+                model.addAttribute("tasksOfGroup", groupDashService.pageForOverdue(pageable, groupId));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
-                model.addAttribute("members",allByGroups);
+                model.addAttribute("members", allByGroups);
                 break;
             case "today":
-                model.addAttribute("tasksOfGroup", groupDashService.pageForToday(pageable,groupId));
+                model.addAttribute("tasksOfGroup", groupDashService.pageForToday(pageable, groupId));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
-                model.addAttribute("members",allByGroups);
+                model.addAttribute("members", allByGroups);
                 break;
             case "done":
-                model.addAttribute("tasksOfGroup", groupDashService.pageForDone(pageable,groupId));
+                model.addAttribute("tasksOfGroup", groupDashService.pageForDone(pageable, groupId));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
-                model.addAttribute("members",allByGroups);
+                model.addAttribute("members", allByGroups);
                 break;
             case "available":
-                model.addAttribute("tasksOfGroup", groupDashService.fetchTasksByGroupId(pageable,groupId));
+                model.addAttribute("tasksOfGroup", groupDashService.fetchTasksByGroupId(pageable, groupId));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
-                model.addAttribute("members",allByGroups);
+                model.addAttribute("members", allByGroups);
                 break;
 
             case "important":
-                model.addAttribute("tasksOfGroup", groupDashService.pageForImportant(pageable,groupId));
+                model.addAttribute("tasksOfGroup", groupDashService.pageForImportant(pageable, groupId));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
-                model.addAttribute("members",allByGroups);
+                model.addAttribute("members", allByGroups);
                 break;
         }
 
@@ -126,7 +127,4 @@ public class GroupDashController {
         return "group-dashboard";
     }
 
-//
-//    PostMapping("send")
-//        public RedirectView chat_post
 }

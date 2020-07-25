@@ -40,80 +40,10 @@ public class TaskController {
     }
 
 
-
-    /**
-     * http://localhost:8080/tasks-dashboard
-     */
-//    @GetMapping("tasks-dashboard")
-//    public String handle_get1(
-//            Model model
-//    ) {
-//        int LoggedUserId=(int) registerService.logged_user().get().getId();
-//        Collection<Task> tasks=taskService.fetchAll(LoggedUserId);
-//
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String username = registerService.logged_user().get().getFullName();
-//        model.addAttribute("username", username);
-//        model.addAttribute("tasks", tasks);
-//        List<Task> toBeShown = new ArrayList<>();
-//        toBeShown.add(taskService.important(LoggedUserId).get(0));
-//        model.addAttribute("shown", toBeShown);
-//        registerService.addProfile(model);
-//        log.info("GET -> /tasks-dashboards");
-//        return "tasks-dashboard";
-//    }
-//
-//    @PostMapping("tasks-dashboard")
-//    public String handle_post1( @RequestParam("task-type") String tsk_status, Model model) {
-//         int LoggedUserId=(int) registerService.logged_user().get().getId();
-//        log.info("POST -> /tasks-dashboards ->" + tsk_status);
-//        String username = registerService.logged_user().get().getFullName();
-//
-//        List<Task> toBeShown = new ArrayList<>();
-//        toBeShown.add(taskService.important(LoggedUserId).get(0));
-//        model.addAttribute("shown", toBeShown);
-//        registerService.addProfile(model);
-//
-//          switch (tsk_status){
-//            case "overdue":
-//                model.addAttribute("tasks",taskService.overdue(LoggedUserId));
-//                model.addAttribute("username", username);
-//                registerService.addProfile(model);
-//                break;
-//            case "today":
-//                model.addAttribute("tasks",taskService.today(LoggedUserId));
-//                model.addAttribute("username", username);
-//                registerService.addProfile(model);
-//                break;
-//            case "done":
-//                model.addAttribute("tasks",taskService.done(LoggedUserId));
-//                model.addAttribute("username", username);
-//                registerService.addProfile(model);
-//                break;
-//            case "available":
-//                model.addAttribute("tasks",taskService.fetchAll(LoggedUserId));
-//                model.addAttribute("username", username);
-//                registerService.addProfile(model);
-//                break;
-//
-//             case "important":
-//                 model.addAttribute("tasks",taskService.important(LoggedUserId));
-//                 model.addAttribute("username", username);
-//                 registerService.addProfile(model);
-//                  break;
-//        }
-//
-//
-//        return "tasks-dashboard";
-//    }
-
-
-
-
     @GetMapping("tasks-archive")
     public String handle_tasks_archive_get(Model model) {
-        if (registerService.logged_user().get().getProfile()!=null){
-            model.addAttribute("profile", registerService.logged_user().get().getProfile());
+        if (registerService.logged_user().getProfile()!=null){
+            model.addAttribute("profile", registerService.logged_user().getProfile());
         }else {
             model.addAttribute("profile", "/img/user-icon-with-background.svg");
         }
@@ -124,7 +54,7 @@ public class TaskController {
     public String handle_goAdd_Task_get(Model model) {
         log.info("GET -> /go_add_task");
 
-        String username = registerService.logged_user().get().getFullName();
+        String username = registerService.logged_user().getFullName();
         registerService.addProfile(model);
         model.addAttribute("username", username);
         return "add-task";
@@ -143,7 +73,7 @@ public class TaskController {
 
 
         LocalDate curr = LocalDate.now();
-        Task task = new Task(title,deadline,curr,"available",content, false, registerService.logged_user().get());
+        Task task = new Task(title,deadline,curr,"available",content, false, registerService.logged_user());
         taskService.addImageAndSaveToDB(task,imageFile);
         log.info(pf("POST -> /task-add: %s image: %s ", task, imageFile.getResource()));
         return new RedirectView("tasks-dashboard");

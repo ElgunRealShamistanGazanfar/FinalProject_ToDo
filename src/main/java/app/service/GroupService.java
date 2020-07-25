@@ -34,13 +34,13 @@ public class GroupService {
 
         MyGroup groupById = groupRepo.findById(id).get();
 
-        MyUser logged_user = registerService.logged_user().get();
-        if (!groupById.getUsers_g().contains(logged_user)){
-                groupById.getUsers_g().add(logged_user);
-                groupRepo.save(groupById);
+        MyUser logged_user = registerService.logged_user();
+        if (!groupById.getUsers_g().contains(logged_user)) {
+            groupById.getUsers_g().add(logged_user);
+            groupRepo.save(groupById);
 
-        }else {
-           model.addAttribute("grp_msg", "You are already in this team");
+        } else {
+            model.addAttribute("grp_msg", "You are already in this team");
         }
 
     }
@@ -48,7 +48,7 @@ public class GroupService {
 
     public void createGroup(String groupName, String groupPass, String groupDesc) {
         MyGroup newGroup = new MyGroup(groupName, groupPass, groupDesc);
-        newGroup.setUsers_g(Arrays.asList(registerService.logged_user().get()));
+        newGroup.setUsers_g(Arrays.asList(registerService.logged_user()));
         groupRepo.save(newGroup);
     }
 }
