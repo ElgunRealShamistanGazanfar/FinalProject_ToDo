@@ -78,7 +78,7 @@
 
         <div th:if="${not #lists.isEmpty(tasksOfGroup)}">
             <br>
-            <div class="h3">Student List</div>
+            <div class="h3" th:text = "${groupName}"></div>
             <br>
 
             <nav aria-label="Pagination" th:if="${tasksOfGroup.totalPages gt 0}">
@@ -120,7 +120,7 @@
                 <p class="task-start-time" th:text="${task.getCurr()}"></p>
                 <p class="task-deadline">Deadline to: <span class="task-deadline-date" th:text="${task.getDeadline()}"></span></p>
                 <p class="task-description" id="desc" th:text="${task.getContent()}"></p>
-                <p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplement_status() ? 'complete' : 'incomplete'}"></p>
+                <p th:id="${task.getId()}"  th:onclick="|callIt('${task.getId()}')|" style="cursor: pointer" class="task-btn" th:text="${task.getComplete() ? 'complete' : 'incomplete'}"></p>
             </div>
         </div>
 
@@ -129,7 +129,7 @@
 
             <p style="color: red" th:text="${grp_msg}"></p><br>
             <table class="table table-hover ">
-                <h3>You Group</h3>
+                <h3>Your Group</h3>
                 <thead class="thead-inverse">
                 <tr>
                     <th>ID</th>

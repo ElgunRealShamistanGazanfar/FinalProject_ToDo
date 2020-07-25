@@ -43,18 +43,18 @@ public class GroupController {
     }
 
 
-
     @GetMapping("add-group")
     public String handle_get_group(Model model) {
-        model.addAttribute("myGroups", registerService.logged_user().get().getGroups());
+        model.addAttribute("myGroups", registerService.logged_user().getGroups());
         log.info("GET -> /add-group");
         return "add-group";
     }
+
     @PostMapping("search-group")
-    public String handle_post_search(@RequestParam("group")String groupName, Model model) {
+    public String handle_post_search(@RequestParam("group") String groupName, Model model) {
         List<MyGroup> groups = groupRepo.findAllByGroupNameIsLike(groupName);
-        model.addAttribute("myGroups", registerService.logged_user().get().getGroups());
-            model.addAttribute("groups", groups);
+        model.addAttribute("myGroups", registerService.logged_user().getGroups());
+        model.addAttribute("groups", groups);
         log.info("Post -> /search-group");
 
         return "add-group";
@@ -62,28 +62,30 @@ public class GroupController {
     }
 
     @GetMapping("join/{id}")
-    public String join_group(@PathVariable int id, Model model){
+    public String join_group(@PathVariable int id, Model model) {
         groupService.AddUserToGroup(id, model);
-        model.addAttribute("myGroups", registerService.logged_user().get().getGroups());
+        model.addAttribute("myGroups", registerService.logged_user().getGroups());
         log.info(String.format("You joined to the group with id %d", id));
         return "add-group";
 
     }
 
     @GetMapping("go/{groupId}")
-    public String go_group(@PathVariable int groupId, Model model, Pageable pageable){
+    public String go_group(@PathVariable int groupId, Model model, Pageable pageable) {
         MyGroup myGroup = groupRepo.findById(groupId).get();
         List<MyUser> allByGroups = myUserRepo.findAllByGroups(myGroup);
-        model.addAttribute("members",allByGroups);
+        model.addAttribute("members", allByGroups);
 
         log.info(String.format("Go to the group with id %d", groupId));
-        final List<MyGroup> my_groups = registerService.logged_user().get().getGroups();
+        final List<MyGroup> my_groups = registerService.logged_user().getGroups();
+        registerService.addProfile(model, myGroup);
+        String username = registerService.logged_user().getFullName();
+        model.addAttribute("username", username);
 
-        for(MyGroup group : my_groups){
-            if (group.getId()==groupId){
+        for (MyGroup group : my_groups) {
+            if (group.getId() == groupId) {
                 group.setStatus("active");
-            }
-            else {
+            } else {
                 group.setStatus("inactive");
             }
         }
@@ -98,10 +100,10 @@ public class GroupController {
 
 
     @PostMapping("create-group")
-    public String handle_post_create(@RequestParam("groupName")String groupName, @RequestParam("groupPass")String groupPass, @RequestParam("groupDesc")String groupDesc,Model model) {
-       groupService.createGroup(groupName,groupPass, groupDesc);
-        model.addAttribute("myGroups", registerService.logged_user().get().getGroups());
-      //  model.addAttribute("createMes", String.format("You have successfully created %s group, with description %s", groupName, groupDesc));
+    public String handle_post_create(@RequestParam("groupName") String groupName, @RequestParam("groupPass") String groupPass, @RequestParam("groupDesc") String groupDesc, Model model) {
+        groupService.createGroup(groupName, groupPass, groupDesc);
+        model.addAttribute("myGroups", registerService.logged_user().getGroups());
+        //  model.addAttribute("createMes", String.format("You have successfully created %s group, with description %s", groupName, groupDesc));
         log.info("Post -> /create-group");
 
         return "add-group";
@@ -109,7 +111,7 @@ public class GroupController {
     }
 
     @GetMapping("group-dashboard")
-    public String groupDash(){
+    public String groupDash() {
         return "group-dashboard";
 
     }

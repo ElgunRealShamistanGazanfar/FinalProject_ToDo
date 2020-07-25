@@ -42,8 +42,8 @@ public class TaskController {
 
     @GetMapping("tasks-archive")
     public String handle_tasks_archive_get(Model model) {
-        if (registerService.logged_user().get().getProfile()!=null){
-            model.addAttribute("profile", registerService.logged_user().get().getProfile());
+        if (registerService.logged_user().getProfile()!=null){
+            model.addAttribute("profile", registerService.logged_user().getProfile());
         }else {
             model.addAttribute("profile", "/img/user-icon-with-background.svg");
         }
@@ -54,7 +54,7 @@ public class TaskController {
     public String handle_goAdd_Task_get(Model model) {
         log.info("GET -> /go_add_task");
 
-        String username = registerService.logged_user().get().getFullName();
+        String username = registerService.logged_user().getFullName();
         registerService.addProfile(model);
         model.addAttribute("username", username);
         return "add-task";
@@ -73,7 +73,7 @@ public class TaskController {
 
 
         LocalDate curr = LocalDate.now();
-        Task task = new Task(title,deadline,curr,"available",content, false, registerService.logged_user().get());
+        Task task = new Task(title,deadline,curr,"available",content, false, registerService.logged_user());
         taskService.addImageAndSaveToDB(task,imageFile);
         log.info(pf("POST -> /task-add: %s image: %s ", task, imageFile.getResource()));
         return new RedirectView("tasks-dashboard");

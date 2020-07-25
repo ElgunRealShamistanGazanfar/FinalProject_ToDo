@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,24 +36,16 @@ public class ReportController {
 
     @Autowired
     TaskService taskService;
-//
-//
-//    @GetMapping("/report/table/paged")
-//    public String getPaged(Model model, Pageable pageable) {
-//      Page<Task> pageForToday = paginationService.pageForToday(pageable);
-//       model.addAttribute("tasks",pageForToday);
-//        return "tasks-dashboard";
-//    }
 
-        @GetMapping("tasks-dashboard")
+    @GetMapping("tasks-dashboard")
     public String handle_get1(
             Model model,
             Pageable pageable
     ) {
-        int LoggedUserId=(int) registerService.logged_user().get().getId();
-        Page<Task> tasks=paginationService.fetchAll(pageable);
+        int LoggedUserId = (int) registerService.logged_user().getId();
+        Page<Task> tasks = paginationService.fetchAll(pageable);
 
-        String username = registerService.logged_user().get().getFullName();
+        String username = registerService.logged_user().getFullName();
         model.addAttribute("username", username);
         model.addAttribute("tasks", tasks);
         List<Task> toBeShown = new ArrayList<>();
@@ -67,9 +58,9 @@ public class ReportController {
 
     @PostMapping("tasks-dashboard")
     public String handle_post1(@RequestParam("task-type") String tsk_status, Model model, Pageable pageable) {
-         int LoggedUserId=(int) registerService.logged_user().get().getId();
+        int LoggedUserId = (int) registerService.logged_user().getId();
         log.info("POST -> /tasks-dashboards ->" + tsk_status);
-        String username = registerService.logged_user().get().getFullName();
+        String username = registerService.logged_user().getFullName();
 
         // it will be shown in description part
         List<Task> toBeShown = new ArrayList<>();
@@ -79,39 +70,38 @@ public class ReportController {
 
         registerService.addProfile(model);
 
-          switch (tsk_status){
+        switch (tsk_status) {
             case "overdue":
-                model.addAttribute("tasks",paginationService.pageForOverdue(pageable));
+                model.addAttribute("tasks", paginationService.pageForOverdue(pageable));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
                 break;
             case "today":
-                model.addAttribute("tasks",paginationService.pageForToday(pageable));
+                model.addAttribute("tasks", paginationService.pageForToday(pageable));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
                 break;
             case "done":
-                model.addAttribute("tasks",paginationService.pageForDone(pageable));
+                model.addAttribute("tasks", paginationService.pageForDone(pageable));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
                 break;
             case "available":
-                model.addAttribute("tasks",paginationService.fetchAll(pageable));
+                model.addAttribute("tasks", paginationService.fetchAll(pageable));
                 model.addAttribute("username", username);
                 registerService.addProfile(model);
                 break;
 
-             case "important":
-                 model.addAttribute("tasks",paginationService.pageForImportant(pageable));
-                 model.addAttribute("username", username);
-                 registerService.addProfile(model);
-                  break;
+            case "important":
+                model.addAttribute("tasks", paginationService.pageForImportant(pageable));
+                model.addAttribute("username", username);
+                registerService.addProfile(model);
+                break;
         }
 
 
         return "tasks-dashboard";
     }
-
 
 
 }

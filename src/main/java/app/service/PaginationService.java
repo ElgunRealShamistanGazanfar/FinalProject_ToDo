@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +37,7 @@ public class PaginationService {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
     private final RegisterService registerService;
 
     public PaginationService(TaskRepo taskRepo, RegisterService registerService) {
@@ -45,9 +45,10 @@ public class PaginationService {
         this.registerService = registerService;
     }
 
+
     public Page<Task> fetchAll(Pageable pageable) {
-        Page<Task> res =taskRepo.findAll(pageable);
-        return res;
+        MyUser logged = registerService.logged_user();
+        return taskRepo.findAllByMyUser(logged, pageable);
     }
 
     public Optional<Task> findTaskById(int id) {
@@ -71,7 +72,6 @@ public class PaginationService {
     }
 
 
-
     public void deleteTask(int id) {
         taskRepo.deleteById(id);
     }
@@ -86,25 +86,26 @@ public class PaginationService {
     }
 
 
+    public Page<Task> pageForToday(Pageable pageable) {
 
-    public Page<Task> pageForToday(Pageable pageable){
-        return taskRepo.findAllByDeadline(java.sql.Date.valueOf(LocalDate.now()),pageable);
+        MyUser logged = registerService.logged_user();
+        return taskRepo.findAllByDeadlineAndMyUser(java.sql.Date.valueOf(LocalDate.now()), logged, pageable);
     }
 
-    public Page<Task> pageForImportant(Pageable pageable){
-        return taskRepo.findAllByStatus("important", pageable);
+    public Page<Task> pageForImportant(Pageable pageable) {
+        MyUser logged = registerService.logged_user();
+        return taskRepo.findAllByStatusAndMyUser("important", logged, pageable);
     }
 
-    public Page<Task> pageForOverdue(Pageable pageable){
-        return taskRepo.findAllByDeadlineAfter(java.sql.Date.valueOf(LocalDate.now()),pageable);
+    public Page<Task> pageForOverdue(Pageable pageable) {
+        MyUser logged = registerService.logged_user();
+        return taskRepo.findAllByDeadlineAfterAndMyUser(java.sql.Date.valueOf(LocalDate.now()), logged, pageable);
     }
 
-    public Page<Task> pageForDone(Pageable pageable){
-   return taskRepo.findAllByComplete(true, pageable);
-
+    public Page<Task> pageForDone(Pageable pageable) {
+        MyUser logged = registerService.logged_user();
+        return taskRepo.findAllByCompleteAndMyUser(true, logged, pageable);
     }
-
-
 
 
 }

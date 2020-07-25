@@ -1,5 +1,6 @@
 package app.service;
 
+import app.entity.MyGroup;
 import app.entity.MyUser;
 import app.repo.MyUserRepo;
 import lombok.SneakyThrows;
@@ -28,29 +29,28 @@ public class RegisterService {
     }
 
 
-
-    public boolean hasUsed(String email){
+    public boolean hasUsed(String email) {
         List<MyUser> all = myUserRepo.findAll();
         List<String> collect = all.stream().map(MyUser::getEmail).collect(Collectors.toList());
         return collect.contains(email);
     }
 
-    public boolean isCorrect(String fullname, String email){
+    public boolean isCorrect(String fullname, String email) {
         Optional<MyUser> allByFullNameAndEmail = myUserRepo.getAllByFullNameAndEmail(fullname, email);
         return allByFullNameAndEmail.isPresent();
     }
 
-    public Optional<MyUser> giveMeUser(String fullname, String email){
+    public Optional<MyUser> giveMeUser(String fullname, String email) {
         Optional<MyUser> allByFullNameAndEmail = myUserRepo.getAllByFullNameAndEmail(fullname, email);
         return allByFullNameAndEmail;
     }
 
-    public Optional<MyUser> logged_user(){
+    public MyUser logged_user() {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails) principal).getUsername();
 
-        return myUserRepo.findByUsername(username);
+        return myUserRepo.findByUsername(username).get();
     }
 
     // Save image to a DB
@@ -58,7 +58,7 @@ public class RegisterService {
     public void addProfileAndSaveToDB(MyUser user, MultipartFile imageFile) {
 
         try {
-            byte [] byteObj = new byte[imageFile.getBytes().length];
+            byte[] byteObj = new byte[imageFile.getBytes().length];
             int i = 0;
             for (byte b : imageFile.getBytes()) {
                 byteObj[i++] = b;
@@ -74,14 +74,22 @@ public class RegisterService {
 
     }
 
-    public void addProfile(Model model){
-        if (logged_user().get().getProfile()!=null){
+    public void addProfile(Model model, MyGroup myGroup) {
+        model.addAttribute("groupName",myGroup.getGroupName());
+        if (logged_user().getProfile() != null) {
             model.addAttribute("profile", "/showProfile");
-        }else {
+        } else {
             model.addAttribute("profile", "/img/user-icon-with-background.svg");
         }
     }
 
+    public void addProfile(Model model) {
+        if (logged_user().getProfile() != null) {
+            model.addAttribute("profile", "/showProfile");
+        } else {
+            model.addAttribute("profile", "/img/user-icon-with-background.svg");
+        }
+    }
 
 
 }
