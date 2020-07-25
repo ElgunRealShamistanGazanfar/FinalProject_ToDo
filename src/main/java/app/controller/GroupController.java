@@ -81,7 +81,7 @@ public class GroupController {
 
         String username = registerService.logged_user().getFullName();
         model.addAttribute("username", username);
-        registerService.addProfile(model);
+        registerService.addProfile(model, myGroup);
 
         for (MyGroup group : my_groups) {
             if (group.getId() == groupId) {

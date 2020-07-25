@@ -78,7 +78,7 @@
 
         <div th:if="${not #lists.isEmpty(tasksOfGroup)}">
             <br>
-            <div class="h3">Student List</div>
+            <div class="h3" th:text = "${groupName}"></div>
             <br>
 
             <nav aria-label="Pagination" th:if="${tasksOfGroup.totalPages gt 0}">

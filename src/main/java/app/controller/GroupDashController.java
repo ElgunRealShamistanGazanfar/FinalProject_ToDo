@@ -87,38 +87,38 @@ public class GroupDashController {
         List<MyUser> allByGroups = myUserRepo.findAllByGroups(myGroup);
         model.addAttribute("members", allByGroups);
 
-        registerService.addProfile(model);
+        registerService.addProfile(model, myGroup);
 
         switch (tsk_status) {
             case "overdue":
                 model.addAttribute("tasksOfGroup", groupDashService.pageForOverdue(pageable, groupId));
                 model.addAttribute("username", username);
-                registerService.addProfile(model);
+                registerService.addProfile(model, myGroup);
                 model.addAttribute("members", allByGroups);
                 break;
             case "today":
                 model.addAttribute("tasksOfGroup", groupDashService.pageForToday(pageable, groupId));
                 model.addAttribute("username", username);
-                registerService.addProfile(model);
+                registerService.addProfile(model, myGroup);
                 model.addAttribute("members", allByGroups);
                 break;
             case "done":
                 model.addAttribute("tasksOfGroup", groupDashService.pageForDone(pageable, groupId));
                 model.addAttribute("username", username);
-                registerService.addProfile(model);
+                registerService.addProfile(model, myGroup);
                 model.addAttribute("members", allByGroups);
                 break;
             case "available":
                 model.addAttribute("tasksOfGroup", groupDashService.fetchTasksByGroupId(pageable, groupId));
                 model.addAttribute("username", username);
-                registerService.addProfile(model);
+                registerService.addProfile(model, myGroup);
                 model.addAttribute("members", allByGroups);
                 break;
 
             case "important":
                 model.addAttribute("tasksOfGroup", groupDashService.pageForImportant(pageable, groupId));
                 model.addAttribute("username", username);
-                registerService.addProfile(model);
+                registerService.addProfile(model, myGroup);
                 model.addAttribute("members", allByGroups);
                 break;
         }

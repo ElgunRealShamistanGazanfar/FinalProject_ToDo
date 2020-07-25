@@ -1,5 +1,6 @@
 package app.service;
 
+import app.entity.MyGroup;
 import app.entity.MyUser;
 import app.repo.MyUserRepo;
 import lombok.SneakyThrows;
@@ -71,6 +72,15 @@ public class RegisterService {
         }
 
 
+    }
+
+    public void addProfile(Model model, MyGroup myGroup) {
+        model.addAttribute("groupName",myGroup.getGroupName());
+        if (logged_user().getProfile() != null) {
+            model.addAttribute("profile", "/showProfile");
+        } else {
+            model.addAttribute("profile", "/img/user-icon-with-background.svg");
+        }
     }
 
     public void addProfile(Model model) {
